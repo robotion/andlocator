@@ -20,7 +20,7 @@ public class Map extends MapActivity {
     ItemizedOverlayImpl itemizedOverlay;
 
 
-    GeoPoint point = new GeoPoint(13240000, 53120000);
+    GeoPoint point = new GeoPoint(53540000, 13520000);
     OverlayItem overlayitem = new OverlayItem(point, "", "");
 
     /**
@@ -35,7 +35,7 @@ public class Map extends MapActivity {
         mapView.setBuiltInZoomControls(true);
 
         mapOverlays = mapView.getOverlays();
-        drawable = this.getResources().getDrawable(R.drawable.marker);
+        drawable = this.getResources().getDrawable(R.drawable.androidmarker);
         itemizedOverlay = new ItemizedOverlayImpl(drawable);
 
 
