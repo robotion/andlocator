@@ -34,6 +34,7 @@ public class Map extends MapActivity {
 
         KeyBasedFileProcessor kbfp = new KeyBasedFileProcessor();
 
+        kbfp.doIt();
 
         setContentView(R.layout.main);
         mapView = (MapView) findViewById(R.id.mapview);
@@ -49,7 +50,7 @@ public class Map extends MapActivity {
             Double lon = locations.get(0).getLongitude() * 1E6;
             Double lat = locations.get(0).getLatitude() * 1E6;
 
-            Projection projection = mapView.getProjection();
+//            Projection projection = mapView.getProjection();
 
 
 
