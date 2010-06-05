@@ -32,6 +32,9 @@ public class Map extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        KeyBasedFileProcessor kbfp = new KeyBasedFileProcessor();
+
+
         setContentView(R.layout.main);
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);

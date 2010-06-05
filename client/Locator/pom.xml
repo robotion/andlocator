@@ -14,7 +14,7 @@
             <artifactId>android</artifactId>
             <version>2.0.1_r1</version>
             <scope>provided</scope>
-            
+
         </dependency>
         <dependency>
             <groupId>android</groupId>
@@ -27,6 +27,12 @@
             <artifactId>junit</artifactId>
             <version>4.0</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcpg-jdk16</artifactId>
+            <version>1.45</version>
+            <!--<scope>test</scope>-->
         </dependency>
     </dependencies>
     <build>
@@ -57,5 +63,22 @@
 
         </plugins>
     </build>
-
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+                <!--<updatePolicy>always</updatePolicy>-->
+                <!--<checksumPolicy>warn</checksumPolicy>-->
+            <!--</releases>-->
+            <!--<snapshots>-->
+                <!--<enabled>true</enabled>-->
+                <!--<updatePolicy>never</updatePolicy>-->
+                <!--<checksumPolicy>fail</checksumPolicy>-->
+            <!--</snapshots>-->
+            <!--<id>codehausSnapshots</id>-->
+            <!--<name>Codehaus Snapshots</name>-->
+            <!--<url>http://snapshots.maven.codehaus.org/maven2</url>-->
+            <!--<layout>default</layout>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 </project>
