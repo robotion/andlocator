@@ -21,7 +21,8 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>
+                            <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                            <!--<mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>-->
                         </manifest>
                     </archive>
                 </configuration>
@@ -59,13 +60,40 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>
+                    <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                    <!--<mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>-->
                     <executable>maven</executable>
                     <!--<workingDirectory>/tmp</workingDirectory>-->
                     <!--<arguments>-->
-                        <!--<argument>-X</argument>-->
-                        <!--<argument>myproject:dist</argument>-->
+                    <!--<argument>-X</argument>-->
+                    <!--<argument>myproject:dist</argument>-->
                     <!--</arguments>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <archive>
+                        <!--
+                        <index>true</true>
+                        -->
+                        <manifest>
+                            <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                            <packageName>com.jaeckel.locator</packageName>
+                            <!-- options
+                            <addClasspath>true</addClasspath>
+                            <addExtensions/>
+                            <classpathPrefix/>
+                            -->
+                        </manifest>
+                        <!--<manifestEntries>-->
+                            <!--<mode>development</mode>-->
+                            <!--<url>${pom.url}</url>-->
+                        <!--</manifestEntries>-->
+                        <!--<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>-->
+                    </archive>
                 </configuration>
             </plugin>
         </plugins>
