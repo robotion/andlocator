@@ -46,6 +46,28 @@
                     <target>1.6</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>
+                    <executable>maven</executable>
+                    <!--<workingDirectory>/tmp</workingDirectory>-->
+                    <!--<arguments>-->
+                        <!--<argument>-X</argument>-->
+                        <!--<argument>myproject:dist</argument>-->
+                    <!--</arguments>-->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
