@@ -29,6 +29,7 @@ public class Map extends MapActivity {
     Drawable drawable;
     ItemizedOverlayImpl itemizedOverlay;
 
+    Position currentPosition = new Position();
 
     /**
      * Called when the activity is first created.
@@ -71,6 +72,10 @@ public class Map extends MapActivity {
 
                 Location location = loc.getLastKnownLocation(pName);
                 if (location != null) {
+
+
+                    currentPosition.setLocation(location);
+                                    
                     Toast.makeText(this, "Provider " + pName + ": " + location.getLatitude() + "/" + location.getLongitude() +
                             "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
                     Double lon = location.getLongitude() * 1E6;
@@ -83,7 +88,8 @@ public class Map extends MapActivity {
                     GeoPoint geopoint = new GeoPoint(lat.intValue(), lon.intValue());
 
                     OverlayItem overlayitem = new OverlayItem(geopoint, "lat: " + lat, "lon: " + lon);
-                    Toast.makeText(this, "lat: " + lat + " lon: " + lon, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "lat: " + lat + " lon: " + lon, Toast.LENGTH_LONG).show();
+                    mapOverlays.clear();
                     itemizedOverlay.addOverlay(overlayitem);
                     mapOverlays.add(itemizedOverlay);
 
