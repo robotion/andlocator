@@ -28,16 +28,16 @@ class PositionController {
   }
 
   def list = {
-    log.error("Gugug")
 
     List<Location> locations = Location.list()
 
-    def response = "{";
+    def response = "{\n";
 
-    locations.each { Location l ->
-      log.error("Location: " + l.encryptedPosition )
-      response += "encryptedLocation: " + l.encryptedPosition + ", "
-
+    locations.each {Location l ->
+      response += "{ "
+      response += "id: " + l.id + ", "
+      response += "encryptedLocation: " + l.encryptedPosition + " "
+      response += "}, \n"
 
     }
 
