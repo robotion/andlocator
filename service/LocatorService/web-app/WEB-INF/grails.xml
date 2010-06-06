@@ -9,7 +9,6 @@
     <resource>UrlMappings</resource>
     <resource>locatorservice.PositionController</resource>
     <resource>com.jaeckel.locator.Location</resource>
-    <resource>locatorservice.Position</resource>
   </resources>
   <plugins>
     <plugin>AppEngineGrailsPlugin</plugin>
