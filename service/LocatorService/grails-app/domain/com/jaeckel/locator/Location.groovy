@@ -20,5 +20,14 @@ class Location implements Serializable {
   Date timestamp
   String status
 
+  public String toString() {
+    return "Location{" +
+            "id=" + id +
+            ", encryptedPosition='" + encryptedPosition + '\'' +
+            ", timestamp=" + timestamp +
+            ", status='" + status + '\'' +
+            '}';
+  }
+
 
 }

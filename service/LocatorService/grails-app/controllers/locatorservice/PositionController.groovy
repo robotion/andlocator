@@ -16,10 +16,10 @@ class PositionController {
     Location p = new Location();
 
     p.encryptedPosition = params.position
-
+    p.timestamp = new Date()
     p.save()
 
-    render("{ status: OK }")
+    render("p: " + p )
   }
 
   def get = {
@@ -36,6 +36,7 @@ class PositionController {
     locations.each {Location l ->
       response += "{ "
       response += "id: " + l.id + ", "
+      response += "timestamp: " + l.timestamp + ", "
       response += "encryptedLocation: " + l.encryptedPosition + " "
       response += "}, \n"
 
