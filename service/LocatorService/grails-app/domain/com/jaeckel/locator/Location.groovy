@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Entity
 class Location implements Serializable {
 
+
   @Id
   @GeneratedValue (strategy = GenerationType.IDENTITY)
   Long id
@@ -19,6 +20,9 @@ class Location implements Serializable {
   String encryptedPosition
   Date timestamp
   String status
+  String keyid
+  Integer keybitcount = 0
+
 
   public String toString() {
     return "Location{" +
@@ -26,8 +30,9 @@ class Location implements Serializable {
             ", encryptedPosition='" + encryptedPosition + '\'' +
             ", timestamp=" + timestamp +
             ", status='" + status + '\'' +
+            ", keyid='" + keyid + '\'' +
+            ", keybitcount=" + keybitcount +
             '}';
   }
-
 
 }

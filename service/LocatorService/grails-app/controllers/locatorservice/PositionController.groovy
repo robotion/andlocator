@@ -6,24 +6,84 @@ class PositionController {
 
   def index = {
 
-    render("{ status: OK }")
+    render(view: "index")
 
   }
 
   def save = {
     log.debug(params)
 
-    Location p = new Location();
+    Location l = new Location();
 
-    p.encryptedPosition = params.position
-    p.timestamp = new Date()
-    p.save()
+    l.encryptedPosition = params.position
+    l.timestamp = new Date()
 
-    render("p: " + p )
+    l.keyid = params.keyid
+    l.keybitcount = Integer.valueOf(params.keybitcount)
+
+    l.status = ""
+    l.save()
+
+    render("l: " + l)
   }
 
   def get = {
-    render("{ status: OK }")
+
+    if (params.keyid != null && params.keyid != "") {
+
+      log.error("Search by keyid: " + params.keyid)
+
+      def locations = Location.findAll("select  from Location where keyid='" + params.keyid + "'");
+
+      def response = "{\n";
+
+      locations.each {Location l ->
+
+        log.error("Location found: " + l)
+        response += "{ "
+        response += "id: " + l.id + ", "
+        response += "timestamp: " + l.timestamp + ", "
+        response += "encryptedLocation: " + l.encryptedPosition + " "
+        response += "keyid: " + l.keyid + " "
+        response += "}, \n"
+
+      }
+      response += "}";
+      render(response)
+
+      return
+
+    } else if (params.id != null && params.id != "") {
+
+      log.error("Search by id: " + params.id)
+
+      def locations = Location.findAll("select  from Location where id=" + params.id);
+
+      def response = "{\n";
+
+      locations.each {Location l ->
+
+        log.error("Location found: " + l)
+        response += "{ "
+        response += "id: " + l.id + ", "
+        response += "timestamp: " + l.timestamp + ", "
+        response += "encryptedLocation: " + l.encryptedPosition + " "
+        response += "keyid: " + l.keyid + " "
+        response += "}, \n"
+
+      }
+
+      response += "}";
+      render(response)
+
+      return
+    }
+
+    response += "}";
+    render(response)
+
+    return
+
 
   }
 
@@ -38,6 +98,7 @@ class PositionController {
       response += "id: " + l.id + ", "
       response += "timestamp: " + l.timestamp + ", "
       response += "encryptedLocation: " + l.encryptedPosition + " "
+      response += "keyid: " + l.keyid + " "
       response += "}, \n"
 
     }
@@ -45,5 +106,11 @@ class PositionController {
     response += " status: OK }";
     render(response)
 
+  }
+
+  def remove = {
+    Location b = Location.get(params.id)
+    b.delete()
+    redirect(action: list)
   }
 }
