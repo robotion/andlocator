@@ -29,6 +29,8 @@ class PositionController {
 
   def get = {
 
+    // since="<timestamp>"  missing
+
     if (params.keyid != null && params.keyid != "") {
 
       log.error("Search by keyid: " + params.keyid)
@@ -42,7 +44,7 @@ class PositionController {
         log.error("Location found: " + l)
         response += "{ "
         response += "id: " + l.id + ", "
-        response += "timestamp: " + l.timestamp + ", "
+        response += "timestamp: " + l.timestamp.time + ", "
         response += "encryptedLocation: " + l.encryptedPosition + " "
         response += "keyid: " + l.keyid + " "
         response += "}, \n"
@@ -66,7 +68,7 @@ class PositionController {
         log.error("Location found: " + l)
         response += "{ "
         response += "id: " + l.id + ", "
-        response += "timestamp: " + l.timestamp + ", "
+        response += "timestamp: " + l.timestamp.time + ", "
         response += "encryptedLocation: " + l.encryptedPosition + " "
         response += "keyid: " + l.keyid + " "
         response += "}, \n"

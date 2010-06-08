@@ -21,7 +21,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                            <mainClass>com.jaeckel.locator.KeyBasedProcessor</mainClass>
                             <!--<mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>-->
                         </manifest>
                     </archive>
@@ -60,7 +60,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                    <mainClass>com.jaeckel.locator.KeyBasedProcessor</mainClass>
                     <!--<mainClass>com.jaeckel.locator.KeyBasedFileProcessor</mainClass>-->
                     <executable>maven</executable>
                     <!--<workingDirectory>/tmp</workingDirectory>-->
@@ -80,7 +80,7 @@
                         <index>true</true>
                         -->
                         <manifest>
-                            <mainClass>com.jaeckel.locator.RSAKeyPairGenerator</mainClass>
+                            <mainClass>com.jaeckel.locator.KeyBasedProcessor</mainClass>
                             <packageName>com.jaeckel.locator</packageName>
                             <!-- options
                             <addClasspath>true</addClasspath>

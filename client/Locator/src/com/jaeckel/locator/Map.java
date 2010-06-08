@@ -2,14 +2,13 @@ package com.jaeckel.locator;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 import android.graphics.Point;
-import android.location.Geocoder;
-import android.location.Address;
-import android.location.LocationManager;
-import android.location.Location;
+import android.location.*;
 import android.content.Intent;
 import android.content.Context;
 
@@ -21,6 +20,7 @@ import java.io.IOException;
 
 public class Map extends MapActivity {
 
+    Handler handler = new Handler();
 
     LinearLayout linearLayout;
     MapView mapView;
@@ -29,7 +29,45 @@ public class Map extends MapActivity {
     Drawable drawable;
     ItemizedOverlayImpl itemizedOverlay;
 
-    Position currentPosition = new Position();
+    LocationManager loc;
+    Context me;
+
+    LocationListener listener = new LocationListener() {
+
+        public void onLocationChanged(final Location location) {
+            System.out.println("----< onLocationChanged: " + location);
+//            Toast.makeText(Map.this, "onLocationChanged: " + location, Toast.LENGTH_LONG).show();
+
+
+            handler.post(new Runnable() {
+
+                public void run() {
+                    updateIconOnMap(location);
+                    mapView.getController().animateTo(getGeoPointFromLocation(location));
+
+                }
+            });
+
+        }
+
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            System.out.println("----< onStatusChanged: " + s);
+//            Toast.makeText(Map.this, "onStatusChanged", Toast.LENGTH_LONG).show();
+
+        }
+
+        public void onProviderEnabled(String s) {
+            System.out.println("----< onProviderEnabled: " + s);
+//            Toast.makeText(Map.this, "onProviderEnabled", Toast.LENGTH_LONG).show();
+
+        }
+
+        public void onProviderDisabled(String s) {
+            System.out.println("----< onProviderDisabled: " + s);
+//            Toast.makeText(Map.this, "onProviderDisabled ", Toast.LENGTH_LONG).show();
+
+        }
+    };
 
     /**
      * Called when the activity is first created.
@@ -38,16 +76,40 @@ public class Map extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        startService(new Intent(this, PositioningService.class));
-
-        KeyBasedFileProcessor kbfp = new KeyBasedFileProcessor();
-
-        kbfp.doIt();
-
+        loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         setContentView(R.layout.main);
         mapView = (MapView) findViewById(R.id.mapview);
         mapView.setBuiltInZoomControls(true);
+        drawable = this.getResources().getDrawable(R.drawable.androidmarker);
 
+        startService(new Intent(this, PositioningService.class));
+
+
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+        try {
+
+            List<Address> addresses = geocoder.getFromLocationName("Marienstr. 11, 10117, Berlin", 1);
+
+            for (Address adr : addresses) {
+
+                updateIconOnMap(adr);
+
+                mapView.getController().animateTo(getGeoPointFromAddress(adr));
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+//        KeyBasedFileProcessor kbfp = new KeyBasedFileProcessor();
+//
+//        kbfp.doIt();
+
+        Location location = loc.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        updateIconOnMap(location);
+        mapView.getController().animateTo(getGeoPointFromLocation(location));
     }
 
 
@@ -57,9 +119,20 @@ public class Map extends MapActivity {
     }
 
     public void onResume() {
+
         super.onResume();
 
-        LocationManager loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        float meters = 1;
+        long millis = 10000; // one minute
+
+        if (loc.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+            loc.requestLocationUpdates(LocationManager.GPS_PROVIDER, millis, meters, listener);
+
+        } else {
+
+            loc.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, millis, meters, listener);
+        }
 
         boolean enabledOnly = false;
         List<String> providers = loc.getProviders(enabledOnly);
@@ -74,36 +147,20 @@ public class Map extends MapActivity {
                 if (location != null) {
 
 
-                    currentPosition.setLocation(location);
-                                    
-                    Toast.makeText(this, "Provider " + pName + ": " + location.getLatitude() + "/" + location.getLongitude() +
-                            "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
-                    Double lon = location.getLongitude() * 1E6;
-                    Double lat = location.getLatitude() * 1E6;
+                    Toast.makeText(this, "Last known location: Provider " + pName + ": " + location.getLatitude()
+                            + "/" + location.getLongitude()
+                            + "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
 
-                    mapOverlays = mapView.getOverlays();
-                    drawable = this.getResources().getDrawable(R.drawable.androidmarker);
-                    itemizedOverlay = new ItemizedOverlayImpl(drawable);
+//                    updateIconOnMap(location);
 
-                    GeoPoint geopoint = new GeoPoint(lat.intValue(), lon.intValue());
-
-                    OverlayItem overlayitem = new OverlayItem(geopoint, "lat: " + lat, "lon: " + lon);
-//                    Toast.makeText(this, "lat: " + lat + " lon: " + lon, Toast.LENGTH_LONG).show();
-                    mapOverlays.clear();
-                    itemizedOverlay.addOverlay(overlayitem);
-                    mapOverlays.add(itemizedOverlay);
-
-
-                    MapController controller = mapView.getController();
-
-                    controller.animateTo(geopoint);
-
+//                    mapView.getController().animateTo(getGeoPointFromLocation(location));
                     // use first non null location
 //                    break;
 
                 } else {
 
-                    Toast.makeText(this, "No LastKnownLocation for Provider: " + pName + " available", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, "No LastKnownLocation for Provider: " + pName
+                            + " available", Toast.LENGTH_LONG).show();
 
                 }
 
@@ -114,5 +171,69 @@ public class Map extends MapActivity {
 
 
         }
+    }
+
+
+    private void updateIconOnMap(Location location) {
+
+        GeoPoint geopoint = getGeoPointFromLocation(location);
+        drawIcon(geopoint);
+    }
+
+
+    private void updateIconOnMap(Address adr) {
+
+        GeoPoint geopoint = getGeoPointFromAddress(adr);
+        drawIcon(geopoint);
+    }
+
+    private GeoPoint getGeoPointFromAddress(Address adr) {
+
+        if (adr == null) {
+            return null;
+        }
+
+        return getGeoPointFromLatLon(adr.getLatitude(), adr.getLongitude());
+    }
+
+    private void drawIcon(GeoPoint geopoint) {
+
+        Toast.makeText(this, "drawIcon", Toast.LENGTH_SHORT).show();
+
+        mapOverlays = mapView.getOverlays();
+        itemizedOverlay = new ItemizedOverlayImpl(drawable);
+
+
+        OverlayItem overlayitem = new OverlayItem(geopoint, "", "");
+        mapOverlays.clear();
+        itemizedOverlay.addOverlay(overlayitem);
+        mapOverlays.add(itemizedOverlay);
+    }
+
+    private GeoPoint getGeoPointFromLocation(Location location) {
+
+        if (location == null) {
+            return null;
+        }
+
+        return getGeoPointFromLatLon(location.getLatitude(), location.getLongitude());
+    }
+
+    private GeoPoint getGeoPointFromLatLon(Double lat, Double lon) {
+
+        Double lon_E6 = lon * 1E6;
+        Double lat_E6 = lat * 1E6;
+
+        GeoPoint geopoint = new GeoPoint(lat_E6.intValue(), lon_E6.intValue());
+        return geopoint;
+    }
+
+
+    public void onPause() {
+        super.onPause();
+
+        loc.removeUpdates(listener);
+
+
     }
 }
