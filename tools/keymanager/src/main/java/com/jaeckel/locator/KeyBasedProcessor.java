@@ -249,7 +249,7 @@ public class KeyBasedProcessor {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PGPPublicKey encKey = readPublicKey(keyIn);
 
-        final String cleartext = "cleartext\n";
+        final String cleartext = "Bla blŠ lblŸs lkld ksldk sldk lsdk lskd lksdrtext";
 
 
         encrypt(out, cleartext, encKey, true, true);
@@ -268,7 +268,11 @@ public class KeyBasedProcessor {
         System.out.println("decryptedOut.size(): " + decryptedOut.size());
         System.out.println("decryptedOut: " + decryptedOut);
 
-//        assert (cleartext.equals(encryptedIn.));
+        if (!cleartext.equals(decryptedOut.toString())) {
+            System.out.println("-----------------------> cleartext != decryptedOut");
+            System.out.println("-----------------------> [" + cleartext + "]");
+            System.out.println("-----------------------> [" + decryptedOut + "]");   
+        }
 
     }
 
