@@ -11,7 +11,7 @@ class PositionController {
   }
 
   def save = {
-    log.debug(params)
+    log.error("--------> " + params.position)
 
     Location l = new Location();
 
@@ -24,6 +24,7 @@ class PositionController {
 
     l.status = ""
     l.save()
+    log.error("--------> location: " + l)
 
     render("l: " + l)
   }

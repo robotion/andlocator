@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.io.InputStream;
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -201,11 +202,14 @@ public class PositioningService extends Service {
     private void sendLocation(final Location location) {
 
 
-        String encryptedString = kbfp.encrypt(location.toString());
+        String encryptedString = kbfp.encrypt("" + location.getLatitude() +"/" + location.getLongitude() + " " + location.getAccuracy()  );
 
         System.out.println("----< sendLocation: " + location);
         System.out.println("----< encryptedString: " + encryptedString);
+        final String encodedString = URLEncoder.encode(encryptedString);
+        System.out.println("----< encodedString: " + encodedString);
         System.out.println("----< keyId: " + kbfp.getKeyId());
+        
         // Create a new HttpClient and Post Header
         HttpPost httppost = new HttpPost("http://androidlocatorservice.appspot.com/position/save");
 
@@ -213,14 +217,17 @@ public class PositioningService extends Service {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
             nameValuePairs.add(new BasicNameValuePair("keyid", "" + kbfp.getKeyId()));
-            nameValuePairs.add(new BasicNameValuePair("position", encryptedString));
+
+
+            nameValuePairs.add(new BasicNameValuePair("position", encodedString));
 //            nameValuePairs.add(new BasicNameValuePair("keybitcount", 1024));
             httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
 
-            Toast.makeText(PositioningService.this, "PS: Sent Location: " +  response.getStatusLine(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(PositioningService.this, "PS: Sent Location: " + response.getStatusLine(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(PositioningService.this, "PS: response: " + response.getEntity().getContent(), Toast.LENGTH_LONG).show();
 
 
         } catch (ClientProtocolException e) {
