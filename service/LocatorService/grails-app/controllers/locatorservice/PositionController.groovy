@@ -19,7 +19,8 @@ class PositionController {
     l.timestamp = new Date()
 
     l.keyid = params.keyid
-    l.keybitcount = Integer.valueOf(params.keybitcount)
+
+//    l.keybitcount = Integer.valueOf(params.keybitcount)
 
     l.status = ""
     l.save()
