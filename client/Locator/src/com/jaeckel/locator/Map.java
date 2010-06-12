@@ -11,6 +11,8 @@ import android.graphics.Point;
 import android.location.*;
 import android.content.Intent;
 import android.content.Context;
+import android.view.MenuItem;
+import android.view.Menu;
 
 import com.google.android.maps.*;
 
@@ -20,66 +22,43 @@ import java.io.IOException;
 
 public class Map extends MapActivity {
 
-    Handler handler = new Handler();
+    private final static int MENU_MY_LOCATION = 0;
+    private final static int MENU_SETTINGS = 1;
+    private final static int MENU_SATELLITE = 2;
+    private final static int MENU_STREET = 3;
 
-    LinearLayout linearLayout;
-    MapView mapView;
+    private Handler handler = new Handler();
 
-    List<Overlay> mapOverlays;
-    Drawable drawable;
-    ItemizedOverlayImpl itemizedOverlay;
+    private LinearLayout linearLayout;
+    private MapView mapView;
 
-    LocationManager loc;
-    Context me;
+    private List<Overlay> mapOverlays;
+    private Drawable drawable;
+    private ItemizedOverlayImpl itemizedOverlay;
 
-    LocationListener listener = new LocationListener() {
+    private LocationManager loc;
+    private Context me;
 
-        public void onLocationChanged(final Location location) {
-            System.out.println("----< onLocationChanged: " + location);
-//            Toast.makeText(Map.this, "onLocationChanged: " + location, Toast.LENGTH_LONG).show();
+    private Location myLocation;
 
-
-            handler.post(new Runnable() {
-
-                public void run() {
-                    updateIconOnMap(location);
-                    mapView.getController().animateTo(getGeoPointFromLocation(location));
-
-                }
-            });
-
-        }
-
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-            System.out.println("----< onStatusChanged: " + s);
-//            Toast.makeText(Map.this, "onStatusChanged", Toast.LENGTH_LONG).show();
-
-        }
-
-        public void onProviderEnabled(String s) {
-            System.out.println("----< onProviderEnabled: " + s);
-//            Toast.makeText(Map.this, "onProviderEnabled", Toast.LENGTH_LONG).show();
-
-        }
-
-        public void onProviderDisabled(String s) {
-            System.out.println("----< onProviderDisabled: " + s);
-//            Toast.makeText(Map.this, "onProviderDisabled ", Toast.LENGTH_LONG).show();
-
-        }
-    };
 
     /**
      * Called when the activity is first created.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         setContentView(R.layout.main);
         mapView = (MapView) findViewById(R.id.mapview);
-        mapView.setBuiltInZoomControls(true);
+
+        if (mapView == null) {
+            Toast.makeText(this, "mapView == null ", Toast.LENGTH_LONG).show();
+        } else {
+            mapView.setBuiltInZoomControls(true);
+        }
         drawable = this.getResources().getDrawable(R.drawable.androidmarker);
 
         startService(new Intent(this, PositioningService.class));
@@ -95,21 +74,31 @@ public class Map extends MapActivity {
 
                 updateIconOnMap(adr);
 
+                myLocation = getLocationFromAddress(adr);
+
                 mapView.getController().animateTo(getGeoPointFromAddress(adr));
+                mapView.preLoad();
 
             }
 
         } catch (IOException e) {
+
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-
-//        KeyBasedFileProcessor kbfp = new KeyBasedFileProcessor();
-//
-//        kbfp.doIt();
 
         Location location = loc.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         updateIconOnMap(location);
         mapView.getController().animateTo(getGeoPointFromLocation(location));
+    }
+
+    private Location getLocationFromAddress(Address adr) {
+
+        Location result = new Location(LocationManager.GPS_PROVIDER);
+
+        result.setLatitude(adr.getLatitude());
+        result.setLongitude(adr.getLongitude());
+
+        return result;
     }
 
 
@@ -151,11 +140,8 @@ public class Map extends MapActivity {
                             + "/" + location.getLongitude()
                             + "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
 
-//                    updateIconOnMap(location);
+                    myLocation = location;
 
-//                    mapView.getController().animateTo(getGeoPointFromLocation(location));
-                    // use first non null location
-//                    break;
 
                 } else {
 
@@ -236,4 +222,93 @@ public class Map extends MapActivity {
 
 
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        menu.add(Menu.NONE, MENU_MY_LOCATION, Menu.NONE, "My Location");
+        menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings");
+
+
+        if (mapView.isStreetView()) {
+            menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Satellite View");
+        } else {
+            menu.add(Menu.NONE, MENU_STREET, Menu.NONE, "Street View");
+
+        }
+
+
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()) {
+            case MENU_MY_LOCATION:
+                Toast.makeText(this, "MENU_MY_LOCATION", Toast.LENGTH_SHORT).show();
+                mapView.getController().animateTo(getGeoPointFromLocation(myLocation));
+                return true;
+
+            case MENU_SETTINGS:
+                Toast.makeText(this, "MENU_SETTINGS", Toast.LENGTH_SHORT).show();
+
+                startActivity(new Intent(this, EditPreferences.class));
+                return true;
+
+            case MENU_SATELLITE:
+                Toast.makeText(this, "MENU_SATELLITE", Toast.LENGTH_SHORT).show();
+
+                mapView.setSatellite(true);
+
+                return true;
+
+            case MENU_STREET:
+                Toast.makeText(this, "MENU_STREET", Toast.LENGTH_SHORT).show();
+
+                mapView.setStreetView(true);
+
+                return true;
+        }
+
+        return false;
+    }
+
+    LocationListener listener = new LocationListener() {
+
+        public void onLocationChanged(final Location location) {
+            System.out.println("----< onLocationChanged: " + location);
+//            Toast.makeText(Map.this, "onLocationChanged: " + location, Toast.LENGTH_LONG).show();
+
+
+            handler.post(new Runnable() {
+
+                public void run() {
+                    updateIconOnMap(location);
+                    mapView.getController().animateTo(getGeoPointFromLocation(location));
+                    myLocation = location;
+                }
+            });
+
+        }
+
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+            System.out.println("----< onStatusChanged: " + s);
+//            Toast.makeText(Map.this, "onStatusChanged", Toast.LENGTH_LONG).show();
+
+        }
+
+        public void onProviderEnabled(String s) {
+            System.out.println("----< onProviderEnabled: " + s);
+//            Toast.makeText(Map.this, "onProviderEnabled", Toast.LENGTH_LONG).show();
+
+        }
+
+        public void onProviderDisabled(String s) {
+            System.out.println("----< onProviderDisabled: " + s);
+//            Toast.makeText(Map.this, "onProviderDisabled ", Toast.LENGTH_LONG).show();
+
+        }
+    };
 }
