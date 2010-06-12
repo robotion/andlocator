@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 
 import com.google.android.maps.*;
+import com.jaeckel.locator.pgp.PubKeyGenerator;
 
 import java.util.List;
 import java.util.Locale;
@@ -25,7 +26,7 @@ public class Map extends MapActivity {
     private final static int MENU_MY_LOCATION = 0;
     private final static int MENU_SETTINGS = 1;
     private final static int MENU_SATELLITE = 2;
-    private final static int MENU_STREET = 3;
+//    private final static int MENU_STREET = 3;
 
     private Handler handler = new Handler();
 
@@ -50,6 +51,14 @@ public class Map extends MapActivity {
 
         super.onCreate(savedInstanceState);
 
+
+        PubKeyGenerator keygen = new PubKeyGenerator();
+
+        String[] keyPair = keygen.createKeyPair();
+
+        System.out.println("Secret Key: " + keyPair[0]);
+        System.out.println("Public Key: " + keyPair[1]);
+
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         setContentView(R.layout.main);
         mapView = (MapView) findViewById(R.id.mapview);
@@ -58,8 +67,10 @@ public class Map extends MapActivity {
             Toast.makeText(this, "mapView == null ", Toast.LENGTH_LONG).show();
         } else {
             mapView.setBuiltInZoomControls(true);
+            mapView.setStreetView(true);
+
         }
-        drawable = this.getResources().getDrawable(R.drawable.androidmarker);
+        drawable = this.getResources().getDrawable(R.drawable.flag);
 
         startService(new Intent(this, PositioningService.class));
 
@@ -229,15 +240,7 @@ public class Map extends MapActivity {
 
         menu.add(Menu.NONE, MENU_MY_LOCATION, Menu.NONE, "My Location");
         menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings");
-
-
-        if (mapView.isStreetView()) {
-            menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Satellite View");
-        } else {
-            menu.add(Menu.NONE, MENU_STREET, Menu.NONE, "Street View");
-
-        }
-
+        menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Toggle Satellite");
 
         return true;
     }
@@ -247,29 +250,33 @@ public class Map extends MapActivity {
 
         switch (item.getItemId()) {
             case MENU_MY_LOCATION:
-                Toast.makeText(this, "MENU_MY_LOCATION", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "MENU_MY_LOCATION", Toast.LENGTH_SHORT).show();
                 mapView.getController().animateTo(getGeoPointFromLocation(myLocation));
                 return true;
 
             case MENU_SETTINGS:
-                Toast.makeText(this, "MENU_SETTINGS", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "MENU_SETTINGS", Toast.LENGTH_SHORT).show();
 
                 startActivity(new Intent(this, EditPreferences.class));
                 return true;
 
             case MENU_SATELLITE:
-                Toast.makeText(this, "MENU_SATELLITE", Toast.LENGTH_SHORT).show();
 
-                mapView.setSatellite(true);
+//                Toast.makeText(this, "MENU_SATELLITE", Toast.LENGTH_SHORT).show();
+                if (mapView.isSatellite()) {
+                    mapView.setSatellite(false);
 
+                } else {
+                    mapView.setSatellite(true);
+                    mapView.setStreetView(true);
+                }
                 return true;
 
-            case MENU_STREET:
-                Toast.makeText(this, "MENU_STREET", Toast.LENGTH_SHORT).show();
-
-                mapView.setStreetView(true);
-
-                return true;
+//            case MENU_STREET:
+//                Toast.makeText(this, "MENU_STREET", Toast.LENGTH_SHORT).show();
+//
+//                mapView.setSatellite(false);
+//                return true;
         }
 
         return false;

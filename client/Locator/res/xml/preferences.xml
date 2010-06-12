@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <CheckBoxPreference
-            android:key="checkbox" android:title="Checkbox Preference" android:summary="Check it on, check it off"/>
+
+    <CheckBoxPreference android:key="auto_update"
+                        android:title="Auto update"
+                        android:summary="Send GPS updates to server"/>
+    <EditTextPreference android:key="update_interval"
+                        android:title="Update Interval"
+                        android:summary="update every n seconds"
+                        android:defaultValue="600"/>
+    <EditTextPreference android:key="update_meters"
+                        android:title="Update when moved"
+                        android:summary="update every n meters"
+                        android:defaultValue="20"/>
+
+
 </PreferenceScreen>
