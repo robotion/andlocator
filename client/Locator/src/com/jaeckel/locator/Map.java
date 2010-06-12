@@ -20,6 +20,9 @@ import com.jaeckel.locator.pgp.PubKeyGenerator;
 import java.util.List;
 import java.util.Locale;
 import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
 
 public class Map extends MapActivity {
 
@@ -51,13 +54,35 @@ public class Map extends MapActivity {
 
         super.onCreate(savedInstanceState);
 
+        if (!new File("/sdcard/pub.asc").exists()) {
+            Toast.makeText(this, "Generating RSA KeyPair...", Toast.LENGTH_LONG).show();
 
-        PubKeyGenerator keygen = new PubKeyGenerator();
+            PubKeyGenerator keygen = new PubKeyGenerator();
 
-        String[] keyPair = keygen.createKeyPair();
+            String[] keyPair = keygen.createKeyPair();
 
-        System.out.println("Secret Key: " + keyPair[0]);
-        System.out.println("Public Key: " + keyPair[1]);
+            System.out.println("Secret Key: \n" + keyPair[0]);
+            System.out.println("Public Key: \n" + keyPair[1]);
+
+            try {
+
+                FileOutputStream fOut = new FileOutputStream("/sdcard/sec.asc");
+                fOut.write(keyPair[0].getBytes());
+                fOut.close();
+
+                FileOutputStream fOut2 = new FileOutputStream("/sdcard/pub.asc");
+                fOut2.write(keyPair[1].getBytes());
+                fOut2.close();
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+        }
+
 
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         setContentView(R.layout.main);
@@ -70,7 +95,7 @@ public class Map extends MapActivity {
             mapView.setStreetView(true);
 
         }
-        drawable = this.getResources().getDrawable(R.drawable.flag);
+        drawable = this.getResources().getDrawable(android.R.drawable.radiobutton_on_background);
 
         startService(new Intent(this, PositioningService.class));
 
