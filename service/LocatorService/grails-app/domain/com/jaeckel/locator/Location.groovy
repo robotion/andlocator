@@ -3,7 +3,8 @@ package com.jaeckel.locator
 
 
 import javax.persistence.*;
-// import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.Text;
+//import com.google.appengine.api.datastore.Key;
 
 @Entity
 class Location implements Serializable {
@@ -16,8 +17,15 @@ class Location implements Serializable {
   static constraints = {
     id visible: false
   }
+//  static mapping = {
+//    columns {
+//      encryptedPosition type:'com.google.appengine.api.datastore.Text'
+//
+//    }
+//  }
 
-  String encryptedPosition
+  Text encryptedPosition
+
   Date timestamp
   String status
   String keyid
@@ -27,7 +35,7 @@ class Location implements Serializable {
   public String toString() {
     return "Location{" +
             "id=" + id +
-            ", encryptedPosition='" + encryptedPosition + '\'' +
+            ", encryptedPosition='" + encryptedPosition.value + '\'' +
             ", timestamp=" + timestamp +
             ", status='" + status + '\'' +
             ", keyid='" + keyid + '\'' +

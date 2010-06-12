@@ -73,8 +73,8 @@ public class PositioningService extends Service {
 
                 Location location = loc.getLastKnownLocation(pName);
                 if (location != null) {
-                    Toast.makeText(this, "Provider " + pName + ": " + location.getLatitude() + "/" + location.getLongitude() +
-                            "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(this, "Provider " + pName + ": " + location.getLatitude() + "/" + location.getLongitude() +
+//                            "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
 
                     sendLocation(location);
 
@@ -167,15 +167,15 @@ public class PositioningService extends Service {
             }
 
 
-            Toast.makeText(PositioningService.this, "PS: onStatusChanged: " + s + " -> " + statusName, Toast.LENGTH_LONG).show();
-            Toast.makeText(PositioningService.this, "PS: use_gps_positioning: " + use_gps_positioning, Toast.LENGTH_SHORT).show();
-            Toast.makeText(PositioningService.this, "PS: use_network_positioning: " + use_network_positioning, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(PositioningService.this, "PS: onStatusChanged: " + s + " -> " + statusName, Toast.LENGTH_LONG).show();
+//            Toast.makeText(PositioningService.this, "PS: use_gps_positioning: " + use_gps_positioning, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(PositioningService.this, "PS: use_network_positioning: " + use_network_positioning, Toast.LENGTH_SHORT).show();
 
         }
 
         public void onProviderEnabled(String s) {
             System.out.println("----< onProviderEnabled: " + s);
-            Toast.makeText(PositioningService.this, "PS: onProviderEnabled: " + s, Toast.LENGTH_LONG).show();
+//            Toast.makeText(PositioningService.this, "PS: onProviderEnabled: " + s, Toast.LENGTH_LONG).show();
             if (s.equals(LocationManager.GPS_PROVIDER)) {
                 gps_positioning_enabled = true;
 
@@ -187,7 +187,7 @@ public class PositioningService extends Service {
 
         public void onProviderDisabled(String s) {
             System.out.println("----< onProviderDisabled: " + s);
-            Toast.makeText(PositioningService.this, "PS: onProviderDisabled: " + s, Toast.LENGTH_LONG).show();
+//            Toast.makeText(PositioningService.this, "PS: onProviderDisabled: " + s, Toast.LENGTH_LONG).show();
 
             if (s.equals(LocationManager.GPS_PROVIDER)) {
                 gps_positioning_enabled = false;
@@ -202,7 +202,8 @@ public class PositioningService extends Service {
     private void sendLocation(final Location location) {
 
 
-        String encryptedString = kbfp.encrypt("" + location.getLatitude() +"/" + location.getLongitude() + " " + location.getAccuracy()  );
+//        String encryptedString = kbfp.encrypt("" + location.getLatitude() +"/" + location.getLongitude() + " " + location.getAccuracy()  );
+        String encryptedString = kbfp.encrypt( location.toString()  );
 
         System.out.println("----< sendLocation: " + location);
         System.out.println("----< encryptedString: " + encryptedString);
@@ -226,8 +227,8 @@ public class PositioningService extends Service {
             // Execute HTTP Post Request
             HttpResponse response = httpclient.execute(httppost);
 
-            Toast.makeText(PositioningService.this, "PS: Sent Location: " + response.getStatusLine(), Toast.LENGTH_SHORT).show();
-            Toast.makeText(PositioningService.this, "PS: response: " + response.getEntity().getContent(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(PositioningService.this, "PS: Sent Location: " + response.getStatusLine(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(PositioningService.this, "PS: response: " + response.getEntity().getContent(), Toast.LENGTH_LONG).show();
 
 
         } catch (ClientProtocolException e) {

@@ -1,6 +1,7 @@
 package locatorservice
 
 import com.jaeckel.locator.Location
+import com.google.appengine.api.datastore.Text
 
 class PositionController {
 
@@ -15,7 +16,7 @@ class PositionController {
 
     Location l = new Location();
 
-    l.encryptedPosition = params.position
+    l.encryptedPosition = new Text(params.position)
     l.timestamp = new Date()
 
     l.keyid = params.keyid
@@ -23,8 +24,14 @@ class PositionController {
 //    l.keybitcount = Integer.valueOf(params.keybitcount)
 
     l.status = ""
-    l.save()
-    log.error("--------> location: " + l)
+
+    def validationResult = l.validate()
+
+    log.error("E RR O RR --------> VALIDATION: " + validationResult)
+
+    def result = l.save()
+
+    log.error("E RR O RR --------> save: " + result)
 
     render("l: " + l)
   }
@@ -47,7 +54,7 @@ class PositionController {
         response += "{ "
         response += "id: " + l.id + ", "
         response += "timestamp: " + l.timestamp.time + ", "
-        response += "encryptedLocation: " + l.encryptedPosition + " "
+        response += "encryptedLocation: " + l.encryptedPosition.value + " "
         response += "keyid: " + l.keyid + " "
         response += "}, \n"
 
@@ -71,7 +78,7 @@ class PositionController {
         response += "{ "
         response += "id: " + l.id + ", "
         response += "timestamp: " + l.timestamp.time + ", "
-        response += "encryptedLocation: " + l.encryptedPosition + " "
+        response += "encryptedLocation: " + l.encryptedPosition.value + " "
         response += "keyid: " + l.keyid + " "
         response += "}, \n"
 
@@ -101,7 +108,7 @@ class PositionController {
       response += "{ "
       response += "id: " + l.id + ", "
       response += "timestamp: " + l.timestamp + ", "
-      response += "encryptedLocation: " + l.encryptedPosition + " "
+      response += "encryptedLocation: " + l.encryptedPosition.value + " "
       response += "keyid: " + l.keyid + " "
       response += "}, \n"
 
