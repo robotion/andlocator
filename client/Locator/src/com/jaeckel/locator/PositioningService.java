@@ -3,13 +3,17 @@ package com.jaeckel.locator;
 import android.app.Service;
 import android.os.IBinder;
 import android.os.Bundle;
+import android.os.Binder;
+import android.os.AsyncTask;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.location.Location;
 import android.location.LocationProvider;
 import android.location.LocationListener;
 import android.widget.Toast;
+import android.preference.PreferenceManager;
 import com.google.inject.Inject;
 import com.sun.xml.internal.ws.util.ByteArrayBuffer;
 
@@ -42,15 +46,28 @@ public class PositioningService extends Service {
     private LocationManager loc;
     private KeyBasedProcessor kbfp = new KeyBasedProcessor();
 
+    public final static String BROADCAST_ACTION = "com.jaeckel.locator.LocationUpdateEvent";
+    private Intent broadcast = new Intent(BROADCAST_ACTION);
+
     private boolean use_gps_positioning = true;
     private boolean gps_positioning_enabled = true;
     private boolean use_network_positioning = true;
     private boolean network_positioning_enabled = true;
     private HttpClient httpclient = new DefaultHttpClient();
 
+    private SharedPreferences prefs;
+
+    private final Binder binder = new LocalBinder();
+
+    public class LocalBinder extends Binder {
+        PositioningService getService() {
+            return (PositioningService.this);
+        }
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return binder;
     }
 
 
@@ -59,66 +76,58 @@ public class PositioningService extends Service {
     @Override
     public void onCreate() {
 
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(prefsListener);
         loc = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 
         boolean enabledOnly = false;
         List<String> providers = loc.getProviders(enabledOnly);
 
-        for (String pName : providers) {
+        setupLocationUpdates();
+
+    }
+
+    @Override
+    public void onDestroy() {
+
+        prefs.unregisterOnSharedPreferenceChangeListener(prefsListener);
+    }
+
+    private void setupLocationUpdates() {
+
+        loc.removeUpdates(listener);
+
+        if (prefs.getBoolean("auto_update", false)) {
 
 
-            if (loc.isProviderEnabled(pName)) {
-                // LocationProvider provider = loc.getProvider(pName);
+            float meters = Integer.valueOf(prefs.getString("update_meters", "50"));
+            long millis = Integer.valueOf(prefs.getString("update_interval", "300")) * 1000;
 
-                Location location = loc.getLastKnownLocation(pName);
-                if (location != null) {
-//                    Toast.makeText(this, "Provider " + pName + ": " + location.getLatitude() + "/" + location.getLongitude() +
-//                            "{" + location.getAccuracy() + "m}", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Doing auto updates every " + meters + "m or every " + millis + "ms ", Toast.LENGTH_SHORT).show();
 
-                    sendLocation(location);
 
-                } else {
-                    Toast.makeText(this, "No LastKnownLocation for Provider: " + pName + " available", Toast.LENGTH_LONG).show();
+            if (loc.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
 
-                }
-
+                loc.requestLocationUpdates(LocationManager.GPS_PROVIDER, millis, meters, listener);
 
             } else {
-                Toast.makeText(this, "LocationProvider: " + pName + " not enabled", Toast.LENGTH_SHORT).show();
+
+                loc.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, millis, meters, listener);
             }
 
         }
-
-        float meters = 15;
-        long millis = 5 * 60000; // five minutes
-//        long millis = 10000; // ten seconds for testing
-
-
-        loc.requestLocationUpdates(LocationManager.GPS_PROVIDER, millis, meters, listener);
-        loc.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, millis, meters, listener);
-
-
-//        Location location = loc.getLastKnownLocation("gps");
-//        if (location != null) {
-//            Toast.makeText(this, location.getLatitude() + "/" + location.getLongitude(), Toast.LENGTH_LONG).show();
-//
-//        } else {
-//            Toast.makeText(this, "No LastKnownLocation available", Toast.LENGTH_LONG).show();
-//
-//        }
     }
 
-    LocationListener listener = new LocationListener() {
+    private LocationListener listener = new LocationListener() {
 
         public void onLocationChanged(final Location location) {
             System.out.println("----< onLocationChanged: " + location);
 
-//            Toast.makeText(PositioningService.this, "PS: onLocationChanged: " + location, Toast.LENGTH_LONG).show();
+            broadcast.putExtra("location", location);
+            sendBroadcast(broadcast);
 
-//            http://androidlocatorservice.appspot.com/position/save?keyid=bbbbbbb&position=fnord&keybitcount=1026
-
-            sendLocation(location);
+            new EncryptAndSendLocationTask().execute(location);
+//            sendLocation(location);
         }
 
 
@@ -203,14 +212,14 @@ public class PositioningService extends Service {
 
 
 //        String encryptedString = kbfp.encrypt("" + location.getLatitude() +"/" + location.getLongitude() + " " + location.getAccuracy()  );
-        String encryptedString = kbfp.encrypt( location.toString()  );
+        String encryptedString = kbfp.encrypt(location.toString());
 
         System.out.println("----< sendLocation: " + location);
         System.out.println("----< encryptedString: " + encryptedString);
         final String encodedString = URLEncoder.encode(encryptedString);
         System.out.println("----< encodedString: " + encodedString);
         System.out.println("----< keyId: " + kbfp.getKeyId());
-        
+
         // Create a new HttpClient and Post Header
         HttpPost httppost = new HttpPost("http://androidlocatorservice.appspot.com/position/save");
 
@@ -240,5 +249,34 @@ public class PositioningService extends Service {
 
     }
 
+
+    class EncryptAndSendLocationTask extends AsyncTask<Location, String, Void> {
+
+        @Override
+        protected Void doInBackground(final Location... locations) {
+
+//            Toast.makeText(PositioningService.this, "doInBackground Sent Location...", Toast.LENGTH_SHORT).show();
+
+            for (Location location : locations) {
+                sendLocation(location);
+
+            }
+
+            return null;
+        }
+    }
+
+    private SharedPreferences.OnSharedPreferenceChangeListener prefsListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+
+            Toast.makeText(PositioningService.this, "PS: prefs changed: " + s, Toast.LENGTH_SHORT).show();
+
+            if ("auto_update".equals(s) || "update_meters".equals(s) || "update_interval".equals(s)) {
+
+                setupLocationUpdates();
+            }
+        }
+    };
 
 }
