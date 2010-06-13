@@ -9,9 +9,8 @@ class UserController {
 
   def create = {
 
-
     if (request.isSecure()) {
-        render("is SSL")
+      render("is SSL")
     } else {
       render("no SSL")
 
