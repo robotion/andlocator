@@ -239,7 +239,8 @@ public class PositioningService extends Service {
 //            Toast.makeText(PositioningService.this, "PS: Sent Location: " + response.getStatusLine(), Toast.LENGTH_SHORT).show();
 //            Toast.makeText(PositioningService.this, "PS: response: " + response.getEntity().getContent(), Toast.LENGTH_LONG).show();
 
-
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
