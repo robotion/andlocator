@@ -60,7 +60,7 @@ public class PositioningService extends Service {
     private final Binder binder = new LocalBinder();
 
     public class LocalBinder extends Binder {
-        PositioningService getService() {
+        public PositioningService getService() {
             return (PositioningService.this);
         }
     }
@@ -116,6 +116,12 @@ public class PositioningService extends Service {
             }
 
         }
+    }
+
+    public void sendLocationAsync(Location location) {
+        
+        new EncryptAndSendLocationTask().execute(location);
+
     }
 
     private LocationListener listener = new LocationListener() {

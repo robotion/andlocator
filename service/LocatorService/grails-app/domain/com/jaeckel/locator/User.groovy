@@ -21,5 +21,6 @@ class User implements Serializable {
   String email
   String passwordHash
   Text pubKey
-  
+  String pubKeyId
+
 }

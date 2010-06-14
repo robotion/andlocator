@@ -2,6 +2,7 @@ package com.jaeckel.locator;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.widget.Toast;
 import android.graphics.drawable.Drawable;
 import android.location.*;
@@ -25,7 +26,8 @@ public class Map extends MapActivity {
     private final static int MENU_MY_LOCATION = 0;
     private final static int MENU_SETTINGS = 1;
     private final static int MENU_SATELLITE = 2;
-//    private final static int MENU_STREET = 3;
+    //    private final static int MENU_STREET = 3;
+    private static final int MENU_SEND_LOCATION = 4;
 
     private Handler handler = new Handler();
 
@@ -62,7 +64,8 @@ public class Map extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startService(new Intent(this, PositioningService.class));
+//        startService(new Intent(this, PositioningService.class));
+
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -114,7 +117,40 @@ public class Map extends MapActivity {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+
+        if (appService == null) {
+            bindService(new Intent(this, PositioningService.class), onService, BIND_AUTO_CREATE); // | BIND_DEBUG_UNBIND);
+        }
+
+        registerReceiver(locationReceiver, new IntentFilter(PositioningService.BROADCAST_ACTION));
+
+        updateIconOnMap(myLocation);
+        mapView.getController().animateTo(getGeoPointFromLocation(myLocation));
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+//        if (appService != null) {
+//            unbindService(onService);
+//        }
+        unregisterReceiver(locationReceiver);
+
+    }
+
     private void createKeys() {
+
         Toast.makeText(this, "Generating RSA KeyPair...", Toast.LENGTH_LONG).show();
 
         PubKeyGenerator keygen = new PubKeyGenerator();
@@ -171,23 +207,6 @@ public class Map extends MapActivity {
         }
     };
 
-    public void onResume() {
-
-        super.onResume();
-
-        registerReceiver(locationReceiver, new IntentFilter(PositioningService.BROADCAST_ACTION));
-
-        updateIconOnMap(myLocation);
-        mapView.getController().animateTo(getGeoPointFromLocation(myLocation));
-
-    }
-
-    public void onPause() {
-        super.onPause();
-
-        unregisterReceiver(locationReceiver);
-
-    }
 
     private void updateIconOnMap(Location location) {
 
@@ -250,6 +269,7 @@ public class Map extends MapActivity {
         menu.add(Menu.NONE, MENU_MY_LOCATION, Menu.NONE, "My Location");
         menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings");
         menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Toggle Satellite");
+        menu.add(Menu.NONE, MENU_SEND_LOCATION, Menu.NONE, "Send Location");
 
         return true;
     }
@@ -278,9 +298,45 @@ public class Map extends MapActivity {
                 }
                 return true;
 
+            case MENU_SEND_LOCATION:
+                Toast.makeText(this, "appService: " + appService, Toast.LENGTH_SHORT).show();
+
+                if (appService != null) {
+                    appService.sendLocationAsync(myLocation);
+
+                }
+                return true;
         }
 
         return false;
     }
+
+    private PositioningService appService = null;
+
+    private ServiceConnection onService = new ServiceConnection() {
+
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+
+            appService = ((PositioningService.LocalBinder) iBinder).getService();
+//            try {
+//
+//                throw new RuntimeException("onServiceConnected...");
+//
+//            } catch (RuntimeException e) {
+//                e.printStackTrace();
+//            }
+        }
+
+        public void onServiceDisconnected(ComponentName componentName) {
+//            try {
+//
+//                throw new RuntimeException("onServiceDisconnected...");
+//
+//            } catch (RuntimeException e) {
+//                e.printStackTrace();
+//            }
+            appService = null;
+        }
+    };
 
 }
