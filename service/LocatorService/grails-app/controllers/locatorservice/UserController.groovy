@@ -3,12 +3,13 @@ package locatorservice
 import com.jaeckel.locator.User
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import com.google.appengine.api.datastore.Text
 
 class UserController {
 
   def index = {
 
-    render("HELO")
+    render("OK: HELO")
 
 
   }
@@ -20,7 +21,7 @@ class UserController {
       def users = User.findAll("select  from User where name='" + params.name + "'");
 
       if (users.size() > 0) {
-        render("name not unique.")
+        render("ERROR: name not unique.")
         return
       }
       User u = new User()
@@ -28,7 +29,7 @@ class UserController {
       u.name = params.name
       u.email = params.email
       u.pubKeyId = params.pubKeyId
-      u.pubKey = params.pubKey
+      u.pubKey = new Text(params.pubKey)
       String password = params.password
       if (password == null) {
         render("ERROR: need pasword parameter")
@@ -39,16 +40,17 @@ class UserController {
 
       if (u.validate()) {
         u.save();
-        render("user: " + u.name + " created.")
+        
+        render("OK: user: " + u.name + " created.")
         return
       }
 
-      render("user not valid.")
+      render("ERROR: user: " + u + " not valid.")
 
 
     } else {
 
-      render("no SSL")
+      render("ERROR: no SSL")
 
     }
 

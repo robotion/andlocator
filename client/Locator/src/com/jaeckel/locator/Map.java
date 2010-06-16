@@ -13,6 +13,9 @@ import android.preference.PreferenceManager;
 
 import com.google.android.maps.*;
 import com.jaeckel.locator.pgp.PubKeyGenerator;
+import com.jaeckel.locator.user.AccountManager;
+import com.jaeckel.locator.user.Account;
+import com.jaeckel.locator.user.AccountActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -28,6 +31,7 @@ public class Map extends MapActivity {
     private final static int MENU_SATELLITE = 2;
     //    private final static int MENU_STREET = 3;
     private static final int MENU_SEND_LOCATION = 4;
+    private static final int MENU_ACCOUNT = 5;
 
     private Handler handler = new Handler();
 
@@ -127,6 +131,9 @@ public class Map extends MapActivity {
 
         super.onResume();
 
+        String result = AccountManager.createAccount(new Account("Dirk JŠckel", "dirk@jaeckel.com", "foobar23", "89457439857", "fnordkey" ));
+        Toast.makeText(this, "createAccount -> result: " + result, Toast.LENGTH_LONG).show();
+        
         if (appService == null) {
             bindService(new Intent(this, PositioningService.class), onService, BIND_AUTO_CREATE); // | BIND_DEBUG_UNBIND);
         }
@@ -268,6 +275,7 @@ public class Map extends MapActivity {
 
         menu.add(Menu.NONE, MENU_MY_LOCATION, Menu.NONE, "My Location");
         menu.add(Menu.NONE, MENU_SETTINGS, Menu.NONE, "Settings");
+        menu.add(Menu.NONE, MENU_ACCOUNT, Menu.NONE, "Account");
         menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Toggle Satellite");
         menu.add(Menu.NONE, MENU_SEND_LOCATION, Menu.NONE, "Send Location");
 
@@ -285,6 +293,11 @@ public class Map extends MapActivity {
             case MENU_SETTINGS:
 
                 startActivity(new Intent(this, EditPreferences.class));
+                return true;
+
+             case MENU_ACCOUNT:
+
+                startActivity(new Intent(this, AccountActivity.class));
                 return true;
 
             case MENU_SATELLITE:

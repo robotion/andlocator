@@ -15,7 +15,7 @@ class User implements Serializable {
 
   static constraints = {
     id(visible: false)
-    name(size:1..10, blank:false, unique:true)
+    name(size: 1..100, blank: false, unique: true)
   }
 
   String name
@@ -24,4 +24,16 @@ class User implements Serializable {
   Text pubKey
   String pubKeyId
 
+  public String toString() {
+     return "User{" +
+             "id=" + id +
+             ", name='" + name + '\'' +
+             ", email='" + email + '\'' +
+             ", passwordHash='" + passwordHash + '\'' +
+             ", pubKey=" + pubKey +
+             ", pubKeyId='" + pubKeyId + '\'' +
+             '}';
+   }
+
+  
 }
