@@ -17,6 +17,12 @@ class UserController {
 
     if (request.isSecure()) {
 
+      def users = User.findAll("select  from User where name='" + params.name + "'");
+
+      if (users.size() > 0) {
+        render("name not unique.")
+        return
+      }
       User u = new User()
 
       u.name = params.name
@@ -24,12 +30,16 @@ class UserController {
       u.pubKeyId = params.pubKeyId
       u.pubKey = params.pubKey
       String password = params.password
+      if (password == null) {
+        render("ERROR: need pasword parameter")
+        return
+      }
       u.passwordHash = generateValue(password)
 
 
       if (u.validate()) {
         u.save();
-        render("user: " + u + " created.")
+        render("user: " + u.name + " created.")
         return
       }
 
@@ -56,13 +66,16 @@ class UserController {
       response += "name: " + u.name + ", "
       response += "email: " + u.email + ", "
 
-      if (pubKey != null) {
+      if (u.pubKey != null) {
         response += "pubKey: " + u.pubKey.value + ", "
 
       } else {
 
         response += "pubKey: ,"
       }
+
+
+      response += "passwordHash: " + u.passwordHash + ", "
 
       response += "pubKeyId: " + u.pubKeyId + " "
       response += "}, \n"
@@ -75,18 +88,53 @@ class UserController {
 
   def get = {
     // by name
+    if (params.name != null && params.name != "") {
 
+      log.error("Search by keyid: " + params.name)
+
+      def users = User.findAll("select  from User where name='" + params.name + "'");
+
+      def response = "{\n";
+
+      users.each {User u ->
+        response += "{ "
+        response += "id: " + u.id + ", "
+        response += "name: " + u.name + ", "
+        response += "email: " + u.email + ", "
+
+        if (u.pubKey != null) {
+          response += "pubKey: " + u.pubKey.value + ", "
+
+        } else {
+
+          response += "pubKey: ,"
+        }
+
+
+        response += "passwordHash: " + u.passwordHash + ", "
+
+        response += "pubKeyId: " + u.pubKeyId + " "
+        response += "}, \n"
+
+      }
+      response += "}";
+      render(response)
+
+      return
+
+    }
   }
 
   def changePassword = {
 
+    def passwordHash = generateValue(params.password)
+
 
   }
 
-
 // Needs salting!
-// or use of DIGEST-MD5
-  
+// or use DIGEST-MD5
+
   public static String generateValue(String s) {
 
 // Based on an implementation from: http://www.hann3mann.de/web-artikel/anzeige/md5-hash-mit-java/

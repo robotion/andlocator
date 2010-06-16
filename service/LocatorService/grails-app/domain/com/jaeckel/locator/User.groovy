@@ -9,13 +9,14 @@ import com.google.appengine.api.datastore.Text;
 @Entity
 class User implements Serializable {
 
-    @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Long id
+  @Id
+  @GeneratedValue (strategy = GenerationType.IDENTITY)
+  Long id
 
-    static constraints = {
-    	id visible:false
-	}
+  static constraints = {
+    id(visible: false)
+    name(size:1..10, blank:false, unique:true)
+  }
 
   String name
   String email
