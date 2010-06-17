@@ -14,16 +14,11 @@ import android.location.LocationProvider;
 import android.location.LocationListener;
 import android.widget.Toast;
 import android.preference.PreferenceManager;
-import com.google.inject.Inject;
-import com.sun.xml.internal.ws.util.ByteArrayBuffer;
+import com.jaeckel.locator.pgp.KeyBasedProcessor;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.net.URL;
-import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.io.InputStream;
-import java.io.BufferedInputStream;
 import java.io.IOException;
 
 import org.apache.http.client.HttpClient;

@@ -131,9 +131,7 @@ public class Map extends MapActivity {
 
         super.onResume();
 
-        String result = AccountManager.createAccount(new Account("Dirk JŠckel", "dirk@jaeckel.com", "foobar23", "89457439857", "fnordkey" ));
-        Toast.makeText(this, "createAccount -> result: " + result, Toast.LENGTH_LONG).show();
-        
+ 
         if (appService == null) {
             bindService(new Intent(this, PositioningService.class), onService, BIND_AUTO_CREATE); // | BIND_DEBUG_UNBIND);
         }
