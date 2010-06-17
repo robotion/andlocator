@@ -9,6 +9,9 @@ import android.view.View;
 import android.preference.PreferenceManager;
 import android.content.SharedPreferences;
 import com.jaeckel.locator.R;
+import com.jaeckel.locator.pgp.KeyBasedProcessor;
+
+import java.io.*;
 
 /**
  * User: biafra
@@ -16,9 +19,13 @@ import com.jaeckel.locator.R;
  * Time: 12:10:54 AM
  */
 public class AccountActivity extends Activity {
+
+    SharedPreferences prefs;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        prefs = PreferenceManager.getDefaultSharedPreferences(AccountActivity.this);
 
         setContentView(R.layout.account);
 
@@ -40,20 +47,74 @@ public class AccountActivity extends Activity {
             EditText passphrase = (EditText) findViewById(R.id.passphrase);
 
 
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(AccountActivity.this);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            final String nameString = name.getText().toString();
+            final String passwordString = password.getText().toString();
+            final String emailString = email.getText().toString();
+            String pubKeyString = pubKey.getText().toString();
+            final String secKeyString = secKey.getText().toString();
+            final String passphraseString = passphrase.getText().toString();
 
 
-            prefs.edit();
+            editor.putString("name", nameString);
+            editor.putString("password", passwordString);
+            editor.putString("email", emailString);
+            editor.putString("pubKey", pubKeyString);
+            editor.putString("secKey", secKeyString);
+            editor.putString("passphrase", passphraseString);
+
+            editor.commit();
+
+            long pubKeyId = 0;
+            if (new File(pubKeyString).exists()) {
+
+                pubKeyId = KeyBasedProcessor.GetKeyId(new File(pubKeyString));
+
+                File file = new File(pubKeyString);
+                StringBuffer contents = new StringBuffer();
+                BufferedReader reader = null;
+
+                try {
+                    reader = new BufferedReader(new FileReader(file));
+                    String text = null;
+
+                    // repeat until all lines is read
+                    while ((text = reader.readLine()) != null) {
+                        contents.append(text)
+                                .append(System.getProperty(
+                                        "line.separator"));
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        if (reader != null) {
+                            reader.close();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                pubKeyString = contents.toString();
+
+
+            } else {
+                pubKeyId = KeyBasedProcessor.GetKeyId(pubKeyString);
+
+            }
 
             String result = AccountManager.createAccount(new Account(
-                    name.getText().toString(),
-                    email.getText().toString(),
-                    password.getText().toString(),
-                    "1233456789",
-                    pubKey.getText().toString())
+                    nameString,
+                    emailString,
+                    passwordString,
+                    "" + pubKeyId,
+                    pubKeyString)
             );
             Toast.makeText(AccountActivity.this, "createAccount -> result: " + result, Toast.LENGTH_LONG).show();
-
 
         }
     };

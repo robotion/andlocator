@@ -72,6 +72,7 @@ public class AccountManager {
     }
 
     private static String inputStreamToString(InputStream in) throws IOException {
+        
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
         StringBuilder stringBuilder = new StringBuilder();
         String line = null;
