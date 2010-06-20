@@ -124,4 +124,45 @@ class PositionController {
     b.delete()
     redirect(action: list)
   }
+
+  def currentPositions = {
+
+    final long yesterday = new Date().getTime() - 24 * 60 * 60 * 1000
+    long since = yesterday
+
+    String query = "select  from Location where keyid='" + params.keyid + "'"
+
+    if (params.since != null && params.since != "") {
+
+      since = Long.valueOf(params.since)
+
+    }
+
+
+    def locations = Location.findAll(query);
+
+    def response = "{\n";
+
+    locations.each {Location l ->
+
+
+      if (l.timestamp.time > since) {
+
+        log.error("Location found: " + l)
+        response += "{ "
+        response += "id: " + l.id + ", "
+        response += "timestamp: " + l.timestamp.time + ", "
+        response += "encryptedLocation: " + l.encryptedPosition.value + " "
+        response += "keyid: " + l.keyid + " "
+        response += "}, \n"
+
+      }
+
+    }
+
+    response += "}";
+
+    render(response)
+
+  }
 }

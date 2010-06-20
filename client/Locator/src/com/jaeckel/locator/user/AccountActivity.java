@@ -28,6 +28,26 @@ public class AccountActivity extends Activity {
         prefs = PreferenceManager.getDefaultSharedPreferences(AccountActivity.this);
 
         setContentView(R.layout.account);
+        EditText name = (EditText) findViewById(R.id.name);
+        name.setText(prefs.getString("name", ""));
+        
+        EditText password = (EditText) findViewById(R.id.password);
+        password.setText(prefs.getString("password", ""));
+
+        EditText password_again = (EditText) findViewById(R.id.password_again);
+        password_again.setText(prefs.getString("password", ""));
+
+        EditText email = (EditText) findViewById(R.id.email);
+        email.setText(prefs.getString("email", ""));
+
+        EditText pubKey = (EditText) findViewById(R.id.pubKey);
+        pubKey.setText(prefs.getString("pubKey", ""));
+
+        EditText secKey = (EditText) findViewById(R.id.secKey);
+        secKey.setText(prefs.getString("secKey", ""));
+
+        EditText passphrase = (EditText) findViewById(R.id.passphrase);
+        passphrase.setText(prefs.getString("passphrase", ""));
 
         Button save = (Button) findViewById(R.id.save);
 
