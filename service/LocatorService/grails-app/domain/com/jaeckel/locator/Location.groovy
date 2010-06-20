@@ -28,7 +28,8 @@ class Location implements Serializable {
 
   Date timestamp
   String status
-  String keyid
+  String toKey
+  String fromKey
   Integer keybitcount = 0
 
 
@@ -38,7 +39,8 @@ class Location implements Serializable {
             ", encryptedPosition='" + encryptedPosition.value + '\'' +
             ", timestamp=" + timestamp +
             ", status='" + status + '\'' +
-            ", keyid='" + keyid + '\'' +
+            ", fromKey='" + fromKey + '\'' +
+            ", toKey='" + toKey + '\'' +
             ", keybitcount=" + keybitcount +
             '}';
   }

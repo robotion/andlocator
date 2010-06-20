@@ -227,7 +227,8 @@ public class PositioningService extends Service {
         try {
             // Add your data
             List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-            nameValuePairs.add(new BasicNameValuePair("keyid", "" + kbfp.getKeyId()));
+            nameValuePairs.add(new BasicNameValuePair("fromKey", "" + kbfp.getKeyId()));
+            nameValuePairs.add(new BasicNameValuePair("toKey", "" + kbfp.getKeyId()));
 
 
             nameValuePairs.add(new BasicNameValuePair("position", encodedString));

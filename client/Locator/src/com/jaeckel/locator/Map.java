@@ -16,6 +16,7 @@ import com.jaeckel.locator.pgp.PubKeyGenerator;
 import com.jaeckel.locator.user.AccountManager;
 import com.jaeckel.locator.user.Account;
 import com.jaeckel.locator.user.AccountActivity;
+import com.jaeckel.locator.contacts.ContactsActivity;
 
 import java.util.List;
 import java.util.Locale;
@@ -32,6 +33,7 @@ public class Map extends MapActivity {
     //    private final static int MENU_STREET = 3;
     private static final int MENU_SEND_LOCATION = 4;
     private static final int MENU_ACCOUNT = 5;
+    private static final int MENU_CONTACTS = 6;
 
     private Handler handler = new Handler();
 
@@ -276,6 +278,7 @@ public class Map extends MapActivity {
         menu.add(Menu.NONE, MENU_ACCOUNT, Menu.NONE, "Account");
         menu.add(Menu.NONE, MENU_SATELLITE, Menu.NONE, "Toggle Satellite");
         menu.add(Menu.NONE, MENU_SEND_LOCATION, Menu.NONE, "Send Location");
+        menu.add(Menu.NONE, MENU_CONTACTS, Menu.NONE, "Contacts");
 
         return true;
     }
@@ -316,6 +319,12 @@ public class Map extends MapActivity {
                     appService.sendLocationAsync(myLocation);
 
                 }
+                return true;
+            
+            case MENU_CONTACTS:
+                startActivity(new Intent(this, ContactsActivity.class));
+
+
                 return true;
         }
 

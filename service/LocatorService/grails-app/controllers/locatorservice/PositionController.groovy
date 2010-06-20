@@ -19,7 +19,8 @@ class PositionController {
     l.encryptedPosition = new Text(params.position)
     l.timestamp = new Date()
 
-    l.keyid = params.keyid
+    l.fromKey = params.fromKey
+    l.toKey = params.toKey
 
 //    l.keybitcount = Integer.valueOf(params.keybitcount)
 
@@ -27,11 +28,11 @@ class PositionController {
 
     def validationResult = l.validate()
 
-    log.error("E RR O RR --------> VALIDATION: " + validationResult)
+    log.error(" VALIDATION: " + validationResult)
 
     def result = l.save()
 
-    log.error("E RR O RR --------> save: " + result)
+    log.error("save: " + result)
 
     render("l: " + l)
   }
@@ -134,7 +135,7 @@ class PositionController {
 
     if (params.since != null && params.since != "") {
 
-      since = Long.valueOf(params.since)
+      since = Long.valueOf(params.since) 
 
     }
 
