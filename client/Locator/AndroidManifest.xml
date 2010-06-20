@@ -16,6 +16,7 @@
         <activity android:name=".EditPreferences" android:label="Preferences"/>
         <activity android:name=".user.AccountActivity"/>
         <activity android:name=".contacts.ContactsActivity"/>
+        <activity android:name=".contacts.AddContactActivity"/>
         <service android:enabled="true" android:name="PositioningService"/>
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>

@@ -25,6 +25,7 @@ public class AccountActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(AccountActivity.this);
 
         setContentView(R.layout.account);
