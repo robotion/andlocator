@@ -16,7 +16,7 @@
         <activity android:name=".EditPreferences" android:label="Preferences"/>
         <activity android:name=".user.AccountActivity" android:label="Account"/>
         <activity android:name=".contacts.ContactsActivity" android:label="Contacts"/>
-        <activity android:name=".contacts.AddContactActivity" android:label="AddContact"/>
+        <activity android:name=".contacts.AddContactActivity" android:label="Add Contact"/>
 
 
         <service android:enabled="true" android:name="PositioningService"/>

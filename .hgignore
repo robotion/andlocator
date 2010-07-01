@@ -1,1 +1,4 @@
 ^client/Locator/target
+^service/LocatorService/target
+^client/Locator/bin
+^tools/keymanager/target

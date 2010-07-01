@@ -243,7 +243,7 @@ public class Map extends MapActivity {
 
         mapOverlays = mapView.getOverlays();
         itemizedOverlay = new ItemizedOverlayImpl(drawable);
-
+        itemizedOverlay.myPopulate();
 
         OverlayItem overlayitem = new OverlayItem(geopoint, "", "");
         mapOverlays.clear();
