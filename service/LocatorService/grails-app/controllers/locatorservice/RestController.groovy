@@ -3,6 +3,6 @@ package locatorservice
 class RestController {
 
   def index = {
-    render params.id
+    render (view: "index", model: [id: params.id])
   }
 }
