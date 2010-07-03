@@ -1,8 +1,8 @@
-package locatorservice
+package com.jaeckel.locator
 
 import grails.test.*
 
-class PositionControllerTests extends ControllerUnitTestCase {
+class UserControllerTests extends ControllerUnitTestCase {
     protected void setUp() {
         super.setUp()
     }

@@ -1,4 +1,4 @@
-package locatorservice
+package com.jaeckel.locator
 
 import grails.test.*
 
