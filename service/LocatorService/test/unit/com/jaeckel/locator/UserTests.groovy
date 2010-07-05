@@ -3,15 +3,17 @@ package com.jaeckel.locator
 import grails.test.*
 
 class UserTests extends GrailsUnitTestCase {
-    protected void setUp() {
-        super.setUp()
-    }
 
-    protected void tearDown() {
-        super.tearDown()
-    }
+  protected void setUp() {
+    super.setUp()
+  }
 
-    void testSomething() {
+  protected void tearDown() {
+    super.tearDown()
+  }
 
-    }
+  void testSomething() {
+    
+  }
+ 
 }

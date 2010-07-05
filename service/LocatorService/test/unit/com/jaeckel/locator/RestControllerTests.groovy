@@ -21,6 +21,6 @@ class RestControllerTests extends ControllerUnitTestCase {
 
     assertTrue(model["id"] == 10)
 
-    fail ("Foo")
+//    fail ("Foo")
   }
 } 
