@@ -1,6 +1,7 @@
 package com.jaeckel.locator
 
 import grails.test.*
+import org.junit.Test;
 
 class RestControllerTests extends ControllerUnitTestCase {
 
@@ -12,6 +13,7 @@ class RestControllerTests extends ControllerUnitTestCase {
     super.tearDown()
   }
 
+  @Test
   void testSomething() {
 
 
@@ -20,6 +22,7 @@ class RestControllerTests extends ControllerUnitTestCase {
     def model = controller.index()
 
     assertTrue(model["id"] == 10)
+    assertEqulas(model["id"], 10)
 
 //    fail ("Foo")
   }

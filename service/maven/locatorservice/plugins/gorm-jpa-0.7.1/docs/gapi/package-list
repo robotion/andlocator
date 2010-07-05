@@ -1,0 +1,12 @@
+DefaultPackage
+grails-app.conf
+grails-app.conf.spring
+grails-app.domain.org.acme
+scripts
+src.groovy.org.grails.jpa
+src.groovy.org.grails.jpa.exceptions
+src.groovy.org.grails.spring.scope
+src.java.org.grails.jpa.domain
+target.test-classes.spring
+test.integration.org.grails.jpa
+test.unit.org.grails.jpa.domain

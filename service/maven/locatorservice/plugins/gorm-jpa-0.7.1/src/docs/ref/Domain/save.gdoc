@@ -1,0 +1,20 @@
+
+h1. save
+
+h2. Purpose
+
+
+
+h2. Examples
+
+{code:java}
+foo.save()
+{code}
+
+h2. Description
+
+
+
+Arguments:
+
+[]
