@@ -13,8 +13,6 @@ import android.preference.PreferenceManager;
 
 import com.google.android.maps.*;
 import com.jaeckel.locator.pgp.PubKeyGenerator;
-import com.jaeckel.locator.user.AccountManager;
-import com.jaeckel.locator.user.Account;
 import com.jaeckel.locator.user.AccountActivity;
 import com.jaeckel.locator.contacts.ContactsActivity;
 
@@ -203,6 +201,7 @@ public class Map extends MapActivity {
 
     private BroadcastReceiver locationReceiver = new BroadcastReceiver() {
 
+        @Override
         public void onReceive(Context context, Intent intent) {
 
             Location location = (Location) intent.getExtras().get("location");
@@ -270,6 +269,7 @@ public class Map extends MapActivity {
     }
 
 
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
 
@@ -283,6 +283,7 @@ public class Map extends MapActivity {
         return true;
     }
 
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         super.onOptionsItemSelected(item);
 
@@ -335,6 +336,7 @@ public class Map extends MapActivity {
 
     private ServiceConnection onService = new ServiceConnection() {
 
+        @Override
         public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
 
             appService = ((PositioningService.LocalBinder) iBinder).getService();
@@ -347,6 +349,7 @@ public class Map extends MapActivity {
 //            }
         }
 
+        @Override
         public void onServiceDisconnected(ComponentName componentName) {
 //            try {
 //
