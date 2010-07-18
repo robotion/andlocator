@@ -2,10 +2,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.jaeckel.locator</groupId>
+        <artifactId>Locator</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <groupId>com.jaeckel.locator</groupId>
     <artifactId>LocatorTest</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>apk</packaging>
+
     <name>Locator Test</name>
 
     <dependencies>
@@ -20,7 +26,6 @@
             <version>1.6_r2</version>
             <scope>provided</scope>
         </dependency>
-        
         <dependency>
             <groupId>com.google.android.maps</groupId>
             <artifactId>maps</artifactId>
@@ -28,30 +33,14 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.0</version>
-            <!--<scope>test</scope>-->
-        </dependency>
-       
-        <dependency>
-            <groupId>roboguice</groupId>
-            <artifactId>roboguice</artifactId>
-            <version>1.0</version>
+            <groupId>com.google.android</groupId>
+            <artifactId>android-test</artifactId>
+            <version>1.5_r4</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.jaeckel.locator</groupId>
-            <artifactId>Locator</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.bouncycastle2</groupId>
-            <artifactId>pgp</artifactId>
+            <artifactId>LocatorApp</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -90,22 +79,5 @@
             <name>Java.net Repository for Maven</name>
             <url>http://download.java.net/maven/2/</url>
         </repository>
-
-        <!--<repository>-->
-        <!--<releases>-->
-        <!--<enabled>false</enabled>-->
-        <!--<updatePolicy>always</updatePolicy>-->
-        <!--<checksumPolicy>warn</checksumPolicy>-->
-        <!--</releases>-->
-        <!--<snapshots>-->
-        <!--<enabled>true</enabled>-->
-        <!--<updatePolicy>never</updatePolicy>-->
-        <!--<checksumPolicy>fail</checksumPolicy>-->
-        <!--</snapshots>-->
-        <!--<id>codehausSnapshots</id>-->
-        <!--<name>Codehaus Snapshots</name>-->
-        <!--<url>http://snapshots.maven.codehaus.org/maven2</url>-->
-        <!--<layout>default</layout>-->
-        <!--</repository>-->
     </repositories>
 </project>

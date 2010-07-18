@@ -363,4 +363,8 @@ public class Map extends MapActivity {
         }
     };
 
+    public boolean testMe(boolean in) {
+
+        return in;
+    }
 }
