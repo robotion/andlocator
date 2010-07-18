@@ -10,6 +10,7 @@
     <modules>
         <module>LocatorApp</module>
         <module>LocatorTest</module>
+        <module>bc2</module>
     </modules>
     <build>
         <pluginManagement>
