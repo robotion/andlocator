@@ -34,6 +34,9 @@ public class PubKeyGeneratorTest extends AndroidTestCase {
         assertNotNull("KeyPair must not be null", keyPair);
         assertEquals("KeyPair must have length 2", 2, keyPair.length);
 
+        Log.i("TEST", "keyPair[0]: " + keyPair[0]);
+        Log.i("TEST", "keyPair[1]: " + keyPair[1]);
+
     }
 
 }
