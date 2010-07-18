@@ -1,7 +1,6 @@
 package com.jaeckel.locator;
 
-import android.test.ActivityInstrumentationTestCase;
-
+import android.test.ActivityInstrumentationTestCase2;
 /**
  * This is a simple framework for a test of an Application.  See
  * {@link android.test.ApplicationTestCase ApplicationTestCase} for more information on
@@ -12,10 +11,10 @@ import android.test.ActivityInstrumentationTestCase;
  * -e class com.jaeckel.locator..MapTest \
  * com.jaeckel.locator.tests/android.test.InstrumentationTestRunner
  */
-public class .MapTest extends ActivityInstrumentationTestCase<.Map> {
+public class MapTest extends ActivityInstrumentationTestCase2<Map> {
 
-    public .MapTest() {
-        super("com.jaeckel.locator", .Map.class);
+    public MapTest() {
+        super("com.jaeckel.locator", Map.class);
     }
 
 }

@@ -73,7 +73,7 @@ public class Map extends MapActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        if (!new File("/sdcard/pub.asc").exists()) {
+        if (!new File("/sdcard/pub.asc").exists() && new File("/sdcard").exists()) {
             createKeys();
         }
 
@@ -117,8 +117,9 @@ public class Map extends MapActivity {
         Location location = loc.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
 
         updateIconOnMap(location);
-        mapView.getController().animateTo(getGeoPointFromLocation(location));
-
+        if (location != null) {
+            mapView.getController().animateTo(getGeoPointFromLocation(location));
+        }
     }
 
     @Override
@@ -131,7 +132,7 @@ public class Map extends MapActivity {
 
         super.onResume();
 
- 
+
         if (appService == null) {
             bindService(new Intent(this, PositioningService.class), onService, BIND_AUTO_CREATE); // | BIND_DEBUG_UNBIND);
         }
@@ -297,7 +298,7 @@ public class Map extends MapActivity {
                 startActivity(new Intent(this, EditPreferences.class));
                 return true;
 
-             case MENU_ACCOUNT:
+            case MENU_ACCOUNT:
 
                 startActivity(new Intent(this, AccountActivity.class));
                 return true;
@@ -321,7 +322,7 @@ public class Map extends MapActivity {
 
                 }
                 return true;
-            
+
             case MENU_CONTACTS:
                 startActivity(new Intent(this, ContactsActivity.class));
 

@@ -27,12 +27,12 @@ public class ItemizedOverlayImpl extends ItemizedOverlay {
 
     public void addOverlay(OverlayItem overlay) {
         mOverlays.add(overlay);
-//        try {
+        try {
             populate();
             
-//        } catch (NullPointerException e) {
-//            e.printStackTrace();
-//        }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
