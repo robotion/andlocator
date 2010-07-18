@@ -31,13 +31,65 @@
 		</Pair>
 	</StyleMap>
 	<Placemark> <name>Placemark1</name> <Point> <coordinates>13.418209,52.5406570,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark1</name> <Point> <coordinates>13.418209,52.5406570,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark1</name> <Point> <coordinates>13.418209,52.5406570,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark2</name> <Point> <coordinates>13.41820,52.54065,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark2</name> <Point> <coordinates>13.41820,52.54065,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark2</name> <Point> <coordinates>13.41820,52.54065,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark3</name> <Point> <coordinates>13.419,52.5406,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark4</name> <Point> <coordinates>13.4195,52.5405,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark5</name> <Point> <coordinates>13.4199,52.5404,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark6</name> <Point> <coordinates>13.420,52.5403,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark7</name> <Point> <coordinates>13.420,52.5402,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark8</name> <Point> <coordinates>13.420,52.5401,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
+	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
 	<Placemark> <name>Placemark9</name> <Point> <coordinates>13.421,52.54,0</coordinates> </Point> </Placemark>
 </Document>
 </kml>
