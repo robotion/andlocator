@@ -7,6 +7,7 @@ class PositionController {
 
   def index = {
 
+    log.error("FNORD")
     render(view: "index")
 
   }
@@ -100,7 +101,9 @@ class PositionController {
   }
 
   def list = {
-    log.debug("listing Locations")
+
+    log.info("listing Locations")
+
     List<Location> locations = Location.list()
 
     def listResponse = "{\n";
