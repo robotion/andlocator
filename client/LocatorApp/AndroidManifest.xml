@@ -25,6 +25,7 @@
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
 
     <!--<instrumentation android:name="android.test.InstrumentationTestRunner"-->
        <!--android:targetPackage="com.jaeckel.locator" android:label="Tests for My Locator App" />-->

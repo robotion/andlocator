@@ -68,7 +68,7 @@ public class Map extends MapActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        startService(new Intent(this, PositioningService.class));
+        startService(new Intent(this, PositioningService.class));
 
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
