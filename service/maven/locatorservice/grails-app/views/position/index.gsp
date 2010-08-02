@@ -11,12 +11,16 @@
 
 
   <a href="/position/list">/position/list</a><br>
-  <a href="/position/save?keyid=abdefgh&position=fnord&keybitcount=1024">/position/save?keyid=abdefgh&position=fnord</a><br>
-  <a href="/position/save?keyid=aaaaaaa&position=fnord&keybitcount=1025">/position/save?keyid=aaaaaaa&position=fnord</a><br>
-  <a href="/position/save?keyid=bbbbbbb&position=fnord&keybitcount=1026">/position/save?keyid=bbbbbbb&position=fnord</a><br>
-  <a href="/position/get?keyid=abdefgh">/position/get?keyid=abdefgh</a><br>
-  <a href="/position/get?keyid=aaaaaaa">/position/get?keyid=aaaaaaa</a><br>
+  <a href="/position/save?fromKey=abdefgh&toKey=123456789&position=fnord&keybitcount=1024">/position/save?fromKey=abdefgh&toKey=123456789&position=fnord&keybitcount=1024</a><br>
+  <a href="/position/save?fromKey=aaaaaaa&toKey=123456789&position=fnord&keybitcount=1025">/position/save?fromKey=aaaaaaa&toKey=123456789&position=fnord&keybitcount=1025</a><br>
+  <a href="/position/save?fromKey=bbbbbbb&toKey=123456789&position=fnord&keybitcount=1026">/position/save?fromKey=bbbbbbb&toKey=123456789&position=fnord&keybitcount=1026</a><br>
+  <a href="/position/get?fromKey=abdefgh">/position/get?fromKey=abdefgh</a><br>
+  <a href="/position/get?fromKey=aaaaaaa">/position/get?fromKey=aaaaaaa</a><br>
   <a href="/position/remove?id=1">/position/remove?id=1</a><br>
+  <a href="/position/remove?id=2">/position/remove?id=2</a><br>
+  <a href="/position/remove?id=3">/position/remove?id=3</a><br>
+  <a href="/position/remove?id=4">/position/remove?id=4</a><br>
+  <a href="/position/remove?id=5">/position/remove?id=5</a><br>
 
 
   </body>

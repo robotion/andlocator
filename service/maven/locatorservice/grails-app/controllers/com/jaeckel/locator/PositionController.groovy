@@ -2,18 +2,17 @@ package com.jaeckel.locator
 
 import com.google.appengine.api.datastore.Text
 import grails.converters.XML
+import grails.converters.JSON
 
 class PositionController {
 
   def index = {
 
-    log.error("FNORD")
     render(view: "index")
 
   }
 
   def save = {
-    log.error("--------> " + params.position)
 
     Location l = new Location();
 
@@ -23,7 +22,7 @@ class PositionController {
     l.fromKey = params.fromKey
     l.toKey = params.toKey
 
-//    l.keybitcount = Integer.valueOf(params.keybitcount)
+    l.keybitcount = Integer.valueOf(params.keybitcount)
 
     l.status = ""
 
@@ -35,67 +34,26 @@ class PositionController {
 
     log.error("save: " + result)
 
-    render l as XML
+    render l as JSON
   }
 
   def get = {
 
     // since="<timestamp>"  missing
+    def locations
 
-    if (params.keyid != null && params.keyid != "") {
+    if (params.fromKey != null && params.fromKey != "") {
 
-      log.error("Search by keyid: " + params.keyid)
+      log.info("Search by fromKey: " + params.fromKey)
 
-      def locations = Location.findAll("select  from Location where keyid='" + params.keyid + "'");
-
-      def response = "{\n";
-
-      locations.each {Location l ->
-
-        log.error("Location found: " + l)
-        response += "{ "
-        response += "id: " + l.id + ", "
-        response += "timestamp: " + l.timestamp.time + ", "
-        response += "encryptedLocation: " + l.encryptedPosition.value + " "
-        response += "keyid: " + l.keyid + " "
-        response += "}, \n"
-
-      }
-      response += "}";
-      render(response)
-
-      return
-
+      locations = Location.findAll("select  from Location where fromKey='" + params.fromKey + "'");
     } else if (params.id != null && params.id != "") {
 
-      log.error("Search by id: " + params.id)
-
-      def locations = Location.findAll("select  from Location where id=" + params.id);
-
-      def getResponse = "{\n";
-
-      locations.each {Location l ->
-
-        log.error("Location found: " + l)
-        getResponse += "{ "
-        getResponse += "id: " + l.id + ", "
-        getResponse += "timestamp: " + l.timestamp.time + ", "
-        getResponse += "encryptedLocation: " + l.encryptedPosition.value + " "
-        getResponse += "keyid: " + l.keyid + " "
-        getResponse += "}, \n"
-
-      }
-
-      getResponse += "}";
-      render(getResponse)
-
-      return
+      log.info("Search by id: " + params.id)
+      locations = Location.findAll("select  from Location where id=" + params.id);
     }
 
-    response += "}";
-    render(response)
-
-    return
+    render locations as JSON
 
 
   }
@@ -106,21 +64,7 @@ class PositionController {
 
     List<Location> locations = Location.list()
 
-    def listResponse = "{\n";
-
-    locations.eachWithIndex {Location l ->
-      listResponse += "{ "
-      listResponse += "id: " + l.id + ", "
-      listResponse += "timestamp: " + l.timestamp + ", "
-      listResponse += "encryptedLocation: " + l.encryptedPosition.value + " "
-      listResponse += "fromKey: " + l.fromKey + " "
-      listResponse += "toKey: " + l.toKey + " "
-      listResponse += "}, \n"
-
-    }
-
-    listResponse += " status: OK }";
-    render(listResponse)
+    render(locations as JSON)
 
   }
 
@@ -135,7 +79,7 @@ class PositionController {
     final long yesterday = new Date().getTime() - 24 * 60 * 60 * 1000
     long since = yesterday
 
-    String query = "select  from Location where keyid='" + params.keyid + "'"
+    String query = "select  from Location where toKey='" + params.toKey + "'"
 
     if (params.since != null && params.since != "") {
 
@@ -146,28 +90,7 @@ class PositionController {
 
     def locations = Location.findAll(query);
 
-    def response = "{\n";
-
-    locations.each {Location l ->
-
-
-      if (l.timestamp.time > since) {
-
-        log.error("Location found: " + l)
-        response += "{ "
-        response += "id: " + l.id + ", "
-        response += "timestamp: " + l.timestamp.time + ", "
-        response += "encryptedLocation: " + l.encryptedPosition.value + " "
-        response += "keyid: " + l.keyid + " "
-        response += "}, \n"
-
-      }
-
-    }
-
-    response += "}";
-
-    render(response)
+    render locations as JSON
 
   }
 }
