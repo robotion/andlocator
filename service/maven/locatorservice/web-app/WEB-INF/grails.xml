@@ -1,0 +1,20 @@
+<grails>
+  <resources>
+    <resource>org.grails.appengine.AppEngineReloadController</resource>
+    <resource>BootStrap</resource>
+    <resource>BuildConfig</resource>
+    <resource>Config</resource>
+    <resource>DataSource</resource>
+    <resource>resources</resource>
+    <resource>UrlMappings</resource>
+    <resource>com.jaeckel.locator.PositionController</resource>
+    <resource>com.jaeckel.locator.RestController</resource>
+    <resource>com.jaeckel.locator.UserController</resource>
+    <resource>com.jaeckel.locator.Location</resource>
+    <resource>com.jaeckel.locator.User</resource>
+  </resources>
+  <plugins>
+    <plugin>AppEngineGrailsPlugin</plugin>
+    <plugin>GormJpaGrailsPlugin</plugin>
+  </plugins>
+</grails>
