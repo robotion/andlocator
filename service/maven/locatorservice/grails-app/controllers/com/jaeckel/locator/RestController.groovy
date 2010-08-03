@@ -12,6 +12,7 @@ class RestController {
 
   def save = { saveCmd ->
 
+    render "FNORD"
   }
 
   def show = { showCmd ->
