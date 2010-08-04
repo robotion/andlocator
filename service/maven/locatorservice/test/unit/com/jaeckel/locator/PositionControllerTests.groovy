@@ -16,7 +16,7 @@ class PositionControllerTests extends  ControllerUnitTestCase {
 
     println("result: " + result);
 
-//    assertEquals("Wrong View for index action: " + controller.response.view, "index", controller.response.view );
+    assertEquals("Wrong view for index action: " + controller.renderArgs.view, "index", controller.renderArgs.view );
 
 
   }
