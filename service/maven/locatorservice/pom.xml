@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.jaeckel.locator</groupId>
     <artifactId>androidlocatorservice</artifactId>
-    <name>Android Locator Service<name>
+    <name>Android Locator Service</name>
     <packaging>war</packaging>
     <version>3</version>
 
