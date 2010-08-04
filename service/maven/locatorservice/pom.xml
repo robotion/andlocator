@@ -93,13 +93,13 @@
             <version>3.11.0.GA</version>
         </dependency>
 
-<!--
-        <dependency>
-            <groupId>com.google.appengine.orm</groupId>
-            <artifactId>datanucleus-appengine</artifactId>
-            <version>1.0.7.final</version>
-        </dependency>
--->
+        <!--
+                <dependency>
+                    <groupId>com.google.appengine.orm</groupId>
+                    <artifactId>datanucleus-appengine</artifactId>
+                    <version>1.0.7.final</version>
+                </dependency>
+        -->
 
         <dependency>
             <groupId>net.sf.ehcache</groupId>
@@ -142,28 +142,33 @@
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-testing</artifactId>
             <version>1.3.5</version>
+            <scope>test</scope>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.google.appengine</groupId>-->
-            <!--<artifactId>appengine-java-sdk</artifactId>-->
-            <!--<version>1.3.5</version>-->
+        <!--<groupId>com.google.appengine</groupId>-->
+        <!--<artifactId>appengine-java-sdk</artifactId>-->
+        <!--<version>1.3.5</version>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-tools-api</artifactId>
             <version>1.3.5</version>
         </dependency>
-        
+<!--
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>datanucleus-jpa</artifactId>
             <version>1.1.5</version>
+            <scope>provided</scope>
+
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>datanucleus-core</artifactId>
             <version>1.1.5</version>
+            <scope>provided</scope>
         </dependency>
+        -->
 
         <!-- For ease of development and testing, we include the HSQLDB database. -->
         <dependency>

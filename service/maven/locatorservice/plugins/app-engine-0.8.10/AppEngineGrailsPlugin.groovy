@@ -83,7 +83,7 @@ A plugin that integrates the AppEngine development runtime and deployment tools 
         appEnginePropertyEditorRegistrar(AppEnginePropertyEditorRegistrar)
 		
 		if(persistenceEngine?.equalsIgnoreCase("JDO")) {
-			log.info "Configuring JDO PersistenceManager"
+			log.info "--------------------> Configuring JDO PersistenceManager ------------------------------------->"
 			
 			persistenceManagerFactory(org.grails.appengine.AppEnginePersistenceManagerFactory) { bean ->
 	    		bean.factoryMethod = "get"

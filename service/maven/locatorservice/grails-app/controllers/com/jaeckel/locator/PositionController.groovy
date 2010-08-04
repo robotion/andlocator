@@ -1,7 +1,6 @@
 package com.jaeckel.locator
 
 import com.google.appengine.api.datastore.Text
-import grails.converters.XML
 import grails.converters.JSON
 
 class PositionController {
