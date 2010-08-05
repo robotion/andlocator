@@ -4,6 +4,8 @@ import com.jaeckel.locator.User
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import com.google.appengine.api.datastore.Text
+import grails.converters.JSON
+import javax.servlet.http.HttpUtils
 
 class UserController {
 
@@ -15,8 +17,10 @@ class UserController {
   }
 
   def create = {
+    URL url =  new URL(HttpUtils.getRequestURL(request).toString())
+    log.error("request.hostName: " + url.host)
 
-    if (request.isSecure()) {
+    if (request.isSecure() || url.host == "localhost") {
 
       def users = User.findAll("select  from User where name='" + params.name + "'");
 
@@ -60,67 +64,18 @@ class UserController {
 
     List<User> users = User.list()
 
-    def response = "{\n";
-
-    users.each {User u ->
-      response += "{ "
-      response += "id: " + u.id + ", "
-      response += "name: " + u.name + ", "
-      response += "email: " + u.email + ", "
-
-      if (u.pubKey != null) {
-        response += "pubKey: " + u.pubKey.value + ", "
-
-      } else {
-
-        response += "pubKey: ,"
-      }
-
-
-      response += "passwordHash: " + u.passwordHash + ", "
-
-      response += "pubKeyId: " + u.pubKeyId + " "
-      response += "}, \n"
-
-    }
-
-    response += " status: OK }";
-    render(response)
+    render(users as JSON)
   }
 
   def get = {
     // by name
     if (params.name != null && params.name != "") {
 
-      log.error("Search by keyid: " + params.name)
+      log.error("Search by name: " + params.name)
 
       def users = User.findAll("select  from User where name='" + params.name + "'");
 
-      def response = "{\n";
-
-      users.each {User u ->
-        response += "{ "
-        response += "id: " + u.id + ", "
-        response += "name: " + u.name + ", "
-        response += "email: " + u.email + ", "
-
-        if (u.pubKey != null) {
-          response += "pubKey: " + u.pubKey.value + ", "
-
-        } else {
-
-          response += "pubKey: ,"
-        }
-
-
-        response += "passwordHash: " + u.passwordHash + ", "
-
-        response += "pubKeyId: " + u.pubKeyId + " "
-        response += "}, \n"
-
-      }
-      response += "}";
-      render(response)
+      render(users as JSON)
 
       return
 
