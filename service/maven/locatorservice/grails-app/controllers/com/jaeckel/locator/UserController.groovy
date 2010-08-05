@@ -17,6 +17,7 @@ class UserController {
   }
 
   def create = {
+    
     URL url =  new URL(HttpUtils.getRequestURL(request).toString())
     log.error("request.hostName: " + url.host)
 

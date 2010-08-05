@@ -5,7 +5,7 @@
     <artifactId>Locator</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Android Locator</name>
+    <name>Locator Android Client</name>
 
     <modules>
         <module>LocatorApp</module>
