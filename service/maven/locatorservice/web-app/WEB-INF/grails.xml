@@ -9,12 +9,18 @@
     <resource>BuildConfig</resource>
     <resource>Config</resource>
     <resource>DataSource</resource>
+    <resource>SecurityConfig</resource>
     <resource>resources</resource>
     <resource>UrlMappings</resource>
     <resource>com.jaeckel.locator.PositionController</resource>
     <resource>com.jaeckel.locator.RestController</resource>
     <resource>com.jaeckel.locator.UserController</resource>
+    <resource>LoginController</resource>
+    <resource>LogoutController</resource>
+    <resource>com.jaeckel.locator.Account</resource>
     <resource>com.jaeckel.locator.Location</resource>
+    <resource>com.jaeckel.locator.RequestMap</resource>
+    <resource>com.jaeckel.locator.Role</resource>
     <resource>com.jaeckel.locator.User</resource>
   </resources>
   <plugins>

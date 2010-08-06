@@ -292,7 +292,7 @@ class AcegiGrailsPlugin {
 			loginUserDomainClass = conf.loginUserDomainClass
 			relationalAuthoritiesField = conf.relationalAuthorities
 			authoritiesMethodName = conf.getAuthoritiesMethod
-			sessionFactory = ref('sessionFactory')
+			//sessionFactory = ref('sessionFactory')
 			authenticateService = ref('authenticateService')
 		}
 

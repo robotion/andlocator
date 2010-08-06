@@ -14,12 +14,6 @@
  */
 package org.codehaus.groovy.grails.plugins.springsecurity;
 
-import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.SessionFactoryUtils;
-import org.springframework.orm.hibernate3.SessionHolder;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.context.support.WebApplicationObjectSupport;
 
 /**
@@ -29,85 +23,9 @@ import org.springframework.web.context.support.WebApplicationObjectSupport;
  * @author <a href='mailto:beckwithb@studentsonly.com'>Burt Beckwith</a>
  */
 public abstract class GrailsWebApplicationObjectSupport extends WebApplicationObjectSupport {
-
-	private final Logger _log = Logger.getLogger(getClass());
-
-	private SessionFactory _sessionFactory;
-
-	/**
-	 * Dependency injection for Hibernate session factory.
-	 * @param sessionFactory  the factory
-	 */
-	public void setSessionFactory(final SessionFactory sessionFactory) {
-		_sessionFactory = sessionFactory;
-	}
-
-	/**
-	 * Holds the session created or existing session and a flag indicating whether it was
-	 * existing (so we know whether to close it or not).
-	 */
-	public static class SessionContainer {
-		private final Session _session;
-		private final boolean _existingSession;
-
-		private SessionContainer(final Session session, final boolean existingSession) {
-			_session = session;
-			_existingSession = existingSession;
-		}
-
-		/**
-		 * Get the session.
-		 * @return  the session
-		 */
-		public Session getSession() {
-			return _session;
-		}
-	}
-
-	/**
-	 * Set up hibernate session.
-	 * @return  the session container, which holds the session and a boolean indicating if the session was pre-existing
-	 */
+	public static class SessionContainer { } 
 	protected SessionContainer setUpSession() {
-		SessionFactory sessionFactory = getSessionFactory();
-
-		Session session;
-		boolean existing;
-		if (TransactionSynchronizationManager.hasResource(sessionFactory)) {
-			_log.debug("Session already has transaction attached");
-			existing = true;
-			session = ((SessionHolder)TransactionSynchronizationManager.getResource(sessionFactory)).getSession();
-		}
-		else {
-			_log.debug("Session does not have transaction attached... Creating new one");
-			existing = false;
-			session = SessionFactoryUtils.getSession(sessionFactory, true);
-			SessionHolder sessionHolder = new SessionHolder(session);
-			TransactionSynchronizationManager.bindResource(sessionFactory, sessionHolder);
-		}
-
-		return new SessionContainer(session, existing);
+		return null;
 	}
-
-	/**
-	 * Release Session.
-	 */
-	protected void releaseSession(final SessionContainer session) {
-		if (session._existingSession) {
-			return;
-		}
-
-		SessionFactory sessionFactory = getSessionFactory();
-		SessionHolder sessionHolder = (SessionHolder)TransactionSynchronizationManager.unbindResource(sessionFactory);
-		SessionFactoryUtils.releaseSession(sessionHolder.getSession(), sessionFactory);
-		_log.debug("Session released");
-	}
-
-	private SessionFactory getSessionFactory() {
-		if (_sessionFactory == null) {
-			// should be set via DI, but for backwards compatibility lookup the standard bean
-			_sessionFactory  = (SessionFactory)getWebApplicationContext().getBean("sessionFactory");
-		}
-		return _sessionFactory;
-	}
+	protected void releaseSession(final SessionContainer session) { }
 }
