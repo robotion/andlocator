@@ -12,7 +12,7 @@ class UserControllerTests extends ControllerUnitTestCase {
   void testIndex() {
 
     controller.index()
-    assertEquals("OK: HELO", controller.response.contentAsString );
+    assertEquals("{OK: HELO}", controller.response.contentAsString );
 
 
   }

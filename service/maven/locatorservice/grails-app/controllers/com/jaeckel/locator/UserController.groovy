@@ -11,7 +11,7 @@ class UserController {
 
   def index = {
 
-    render("{ OK: HELOÊ}")
+    render("{OK: HELO}")
 
 
   }
