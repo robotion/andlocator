@@ -3,3 +3,4 @@
 ^service/maven/locatorservice/target
 ^client/Locator/bin
 ^tools/keymanager/target
+^service/maven/locatorservice/web-app
