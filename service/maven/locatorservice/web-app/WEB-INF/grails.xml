@@ -1,15 +1,13 @@
 <grails>
   <resources>
-    <resource>DefaultSecurityConfig</resource>
-    <resource>org.grails.plugins.springsecurity.controller.AuthBase</resource>
-    <resource>org.grails.plugins.springsecurity.service.AuthenticateService</resource>
-    <resource>org.grails.plugins.springsecurity.taglib.AuthorizeTagLib</resource>
     <resource>org.grails.appengine.AppEngineReloadController</resource>
+    <resource>DefaultSecurityConfig</resource>
+    <resource>grails.plugins.springsecurity.SpringSecurityService</resource>
+    <resource>grails.plugins.springsecurity.SecurityTagLib</resource>
     <resource>BootStrap</resource>
     <resource>BuildConfig</resource>
     <resource>Config</resource>
     <resource>DataSource</resource>
-    <resource>SecurityConfig</resource>
     <resource>resources</resource>
     <resource>UrlMappings</resource>
     <resource>com.jaeckel.locator.PositionController</resource>
@@ -24,8 +22,8 @@
     <resource>com.jaeckel.locator.User</resource>
   </resources>
   <plugins>
-    <plugin>AcegiGrailsPlugin</plugin>
     <plugin>AppEngineGrailsPlugin</plugin>
     <plugin>GormJpaGrailsPlugin</plugin>
+    <plugin>SpringSecurityCoreGrailsPlugin</plugin>
   </plugins>
 </grails>

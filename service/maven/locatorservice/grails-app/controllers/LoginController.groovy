@@ -1,11 +1,5 @@
-import org.codehaus.groovy.grails.plugins.springsecurity.RedirectUtils
-import org.grails.plugins.springsecurity.service.AuthenticateService
-
-import org.springframework.security.AuthenticationTrustResolverImpl
-import org.springframework.security.DisabledException
-import org.springframework.security.context.SecurityContextHolder as SCH
-import org.springframework.security.ui.AbstractProcessingFilter
-import org.springframework.security.ui.webapp.AuthenticationProcessingFilter
+import org.springframework.security.authentication.AuthenticationTrustResolverImpl
+import org.springframework.security.authentication.DisabledException
 
 /**
  * Login Controller (Example).
@@ -74,16 +68,16 @@ class LoginController {
 	 */
 	def openIdAuthenticate = {
 		String openID = params['j_username']
-		try {
+//		try {
 			String returnToURL = RedirectUtils.buildRedirectUrl(
 					request, response, openIDAuthenticationProcessingFilter.filterProcessesUrl)
 			String redirectUrl = openIDConsumer.beginConsumption(request, openID, returnToURL)
 			redirect url: redirectUrl
-		}
-		catch (org.springframework.security.ui.openid.OpenIDConsumerException e) {
-			log.error "Consumer error: $e.message", e
-			redirect url: openIDAuthenticationProcessingFilter.authenticationFailureUrl
-		}
+//		}
+//		catch (org.springframework.security.ui.openid.OpenIDConsumerException e) {
+//			log.error "Consumer error: $e.message", e
+//			redirect url: openIDAuthenticationProcessingFilter.authenticationFailureUrl
+//		}
 	}
 
 	// Login page (function|json) for Ajax access.
