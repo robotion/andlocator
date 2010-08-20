@@ -44,17 +44,17 @@ class BootStrap {
 
       println "detected ENV_DEVELOPMENT"
 
-      if (!existsUser("Dirk")) {
+      if (!userWithNameExists("Fnord")) {
 
 
-        println "creating User"
+        println "creating User Fnord"
 
         User u = new User()
 
-        u.name = "Dirk"
-        u.email = "testuser@test.do.main"
+        u.name = "Fnord"
+        u.email = "fnord@foo.do.main"
         u.pubKeyId = "123456789"
-        u.pubKey = new Text("Lorem ipsum dolor sit amet")
+        u.pubKey = new Text("Nochmal Lorem ipsum dolor sit amet")
 
         String password = "secret"
         if (password == null) {
@@ -69,29 +69,14 @@ class BootStrap {
 
           println("OK: user: " + u.name + " created.")
 
-          if (existsUser("Dirk")) {
-            println "1. User Dirk exists now!"
+          if (userWithNameExists("Fnord")) {
+            println "1. User Fnord exists now!"
           } else {
-            println "1. Still no user Dirk!!!! :-("
+            println "1. Still no user Fnord!!!! :-("
           }
 
-          if (checkUser("Dirk")) {
-            println "1. User Dirk exists now!"
-          } else {
-            println "1. Still no user Dirk!!!! :-("
-          }
+          listUsers()
 
-//          if (existsUser3("Dirk")) {
-//            println "2. User Dirk exists now!"
-//          } else {
-//            println "2. Still no user Dirk!!!! :-("
-//          }
-
-//          if (existsUser2("Dirk")) {
-//            println "User Dirk exists now!"
-//          } else {
-//            println "Still no user Dirk!!!! :-("
-//          }
         }
       }
 
@@ -106,79 +91,33 @@ class BootStrap {
     }
   }
 
-  def checkUser(s) {
-    println("------> dataStore.get(): ")
+  def userWithNameExists(s) {
+    println("------> dataStore.get(): s: " + s)
 
-//    try {
-//      Entity userEntity = datastore.get(KeyFactory.createKey("User", 3));
-//      println("------> userEntity: " + userEntity)
-//    } catch (EntityNotFoundException e) {
-//      println "EntityNotFoundException: " + e.getMessage()
-//    }
-
-    Query query = new Query("User").addFilter("Name", Query.FilterOperator.EQUAL, s);
+    Query query = new Query("User").addFilter("name", Query.FilterOperator.EQUAL, s);
 
     for (Entity taskEntity: datastore.prepare(query).asIterable()) {
       println "taskEntity: " + taskEntity
-    }
 
-    return false
-  }
-
-  def existsUser(s) {
-
-    def users = User.findAllByName("Dirk")
-    if (users) {
       return true
     }
 
     return false
-
   }
 
-  def existsUser2(s) {
+  def listUsers() {
+    def result = []
 
-    println "-----> existsUser2: s: " + s
-    def users = User.findAll("select from User where name='" + s + "'");
-    println "-----> after findAll user: " + users
+    Query query = new Query("User");
 
-    if (users) {
+    for (Entity user: datastore.prepare(query).asIterable()) {
+      println "taskEntity: " + user
 
-      users.each {
-        println "it: " + it
-        if (it.name == s) {
-          return true
-
-        }
-      }
+      result.add(user.getProperties())
 
     }
 
-    return false
-
+    return result
   }
-
-  def existsUser3(s) {
-
-    println "-----> existsUser2: s: " + s
-    def users = User.list();
-    println "-----> after findAll user: " + users
-
-    if (users) {
-
-      users.each {
-        println "it: " + it
-        if (it.name == s) {
-          return true
-
-        }
-      }
-
-    }
-
-    return false
-
-  }
-
 
 }

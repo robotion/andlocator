@@ -36,10 +36,12 @@ class UserController {
       u.pubKeyId = params.pubKeyId
       u.pubKey = new Text(params.pubKey)
       String password = params.password
+      
       if (password == null) {
         render("ERROR: need pasword parameter")
         return
       }
+      
       u.passwordHash = generateMD5Value(password)
 
 

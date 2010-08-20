@@ -13,5 +13,6 @@ class UrlMappings {
     "/rest/$id?"(controller: "rest") {
       action = [GET: "show", PUT: "update", DELETE: "delete", POST: "save"]
     }
+    
   }
 }
