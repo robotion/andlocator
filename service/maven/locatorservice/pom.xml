@@ -239,6 +239,11 @@
                 <groupId>net.kindleit</groupId>
                 <artifactId>maven-gae-plugin</artifactId>
                 <version>0.6.0</version>
+	        <configuration>
+                    <serverId>appengine.google.com</serverId>
+                    <sdkDir>${appengine.sdk.root}</sdkDir>
+                    <appDir>${basedir}/war</appDir>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.grails</groupId>
