@@ -2,9 +2,13 @@ package com.jaeckel.locator
 
 import com.google.appengine.api.datastore.Text
 import grails.converters.JSON
+import com.google.appengine.api.datastore.DatastoreServiceFactory
+import com.google.appengine.api.datastore.DatastoreService
 
 class PositionController {
 
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  
   def index = {
 
     render(view: "index")

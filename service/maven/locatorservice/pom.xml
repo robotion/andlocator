@@ -35,6 +35,10 @@
                 <enabled>false</enabled>
             </releases>
         </repository>
+        <repository>
+            <id>objectify-appengine</id>
+            <url>http://objectify-appengine.googlecode.com/svn/maven</url>
+        </repository>
     </repositories>
     <dependencies>
         <dependency>
@@ -204,6 +208,12 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.objectify</groupId>
+            <artifactId>objectify</artifactId>
+            <version>2.2.1</version>
+        </dependency>
     </dependencies>
 
 
@@ -219,7 +229,7 @@
                 <enabled>false</enabled>
             </releases>
         </pluginRepository>
-        
+
         <pluginRepository>
             <id>maven-gae-plugin-repo</id>
             <name>Maven Google App Engine Repository</name>

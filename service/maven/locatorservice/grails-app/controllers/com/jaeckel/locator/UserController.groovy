@@ -6,9 +6,13 @@ import java.security.NoSuchAlgorithmException
 import com.google.appengine.api.datastore.Text
 import grails.converters.JSON
 import javax.servlet.http.HttpUtils
+import com.google.appengine.api.datastore.DatastoreServiceFactory
+import com.google.appengine.api.datastore.DatastoreService
 
 class UserController {
 
+  DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+  
   def index = {
 
     render("{OK: HELO}")
