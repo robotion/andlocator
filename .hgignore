@@ -1,6 +1,8 @@
 ^client/Locator/target
+^client/LocatorApp/target
 ^service/LocatorService/target
 ^service/maven/locatorservice/target
 ^client/Locator/bin
 ^tools/keymanager/target
 ^service/maven/locatorservice/web-app
+
