@@ -49,6 +49,7 @@
     </dependencies>
     <build>
         <finalName>${artifactId}</finalName>
+        <!--<finalName>LocatorApp2</finalName>-->
         <sourceDirectory>src</sourceDirectory>
         <plugins>
             <plugin>
@@ -94,6 +95,7 @@
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>target/classes</outputDirectory>
+                            <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>
                 </executions>
